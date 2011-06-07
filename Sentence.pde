@@ -10,10 +10,9 @@ class Sentence {
     this.fsize = fsize;
     float pos_x = this.x;
     float pos_y = this.y;
+    this.sentence = sentenceString.toUpperCase();
     this.words = new HashMap<String, Word>();
-    this.words.put(sentenceString, new Word(sentenceString, this.x, this.y, this.fsize));
-    this.sentence = sentenceString;
+    this.words.put(sentence, new Word(sentence, this.x, this.y, this.fsize));
   }
-  
 }
 

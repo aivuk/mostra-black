@@ -1,4 +1,4 @@
-  class SentenceCreator {
+class SentenceCreator {
 
   World world;
 
@@ -26,49 +26,47 @@
       this.world.addWord(word);
       pos_x += 5 + s.fsize*word.s.length();
     }
-     
-
   }
 
   void update() {
     String s = "Fazer sexo oral não cansa a boca"; 
-    
+
     /*
     if (frameCount == 10) {
-      Sentence so = new Sentence(s, width/2-70, height/2, 8);
-
-      this.world.addSentence(so);
-      this.world.addWords(so.words.values());
-    }
-
-    if (frameCount == 15) {
-      String ss = "Fazer sexo cansa"; 
-
-      Sentence so2 = new Sentence(ss, width/2-70, height/2, 8);
-      this.world.addSentence(so2);
-      this.world.addWords(so2.words.values());
-    }
-
-    if (frameCount == 20) {
-      String ss = "Fazer sexo pode cansar"; 
-
-      Sentence so3 = new Sentence(ss, width/2-70, height/2, 8);
-      this.world.addSentence(so3);
-      this.world.addWords(so3.words.values());
-    }
-    if (frameCount >= 20 && frameCount <= 2 ) {
-      String ss = "Fazer cansa"; 
-
-      Sentence so3 = new Sentence(ss, width/2-70, height/2, 8);
-      this.world.addSentence(so3);
-      this.world.addWords(so3.words.values());
-    }
+     Sentence so = new Sentence(s, width/2-70, height/2, 8);
+     
+     this.world.addSentence(so);
+     this.world.addWords(so.words.values());
+     }
+     
+     if (frameCount == 15) {
+     String ss = "Fazer sexo cansa"; 
+     
+     Sentence so2 = new Sentence(ss, width/2-70, height/2, 8);
+     this.world.addSentence(so2);
+     this.world.addWords(so2.words.values());
+     }
+     
+     if (frameCount == 20) {
+     String ss = "Fazer sexo pode cansar"; 
+     
+     Sentence so3 = new Sentence(ss, width/2-70, height/2, 8);
+     this.world.addSentence(so3);
+     this.world.addWords(so3.words.values());
+     }
+     if (frameCount >= 20 && frameCount <= 2 ) {
+     String ss = "Fazer cansa"; 
+     
+     Sentence so3 = new Sentence(ss, width/2-70, height/2, 8);
+     this.world.addSentence(so3);
+     this.world.addWords(so3.words.values());
+     }*/
 
     if (frameCount == 100) {
       for (Sentence si:this.world.sentences.values()) {
         breakSentence(si);
       }
-    } */
+    }
   }
 }
 

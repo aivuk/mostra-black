@@ -19,7 +19,7 @@ class World {
   //provavelmente depois de mostrar a sentenca e quebra-la
   void addWords(Collection<Word> ws) {
     for (Word w: ws) {
-       addWord(w);
+      addWord(w);
     }
   }
 
@@ -27,7 +27,8 @@ class World {
     if (this.words.containsKey(w.s)) {
       this.words.get(w.s).count += 5;
       this.words.get(w.s).grow();
-    } else {
+    } 
+    else {
       this.words.put(w.s, w);
     }
   }
@@ -63,6 +64,42 @@ class World {
 
     // Cria fonte das frase
     sc = new SentenceCreator(this);
+ 
+
+    readCsv();
+
+
+    //verifica se existem frases no arquivo
+    //caso exista
+  }
+
+  void readCsv() {
+
+    try {
+
+      CsvReader frasesFile = new CsvReader(new InputStreamReader(new FileInputStream(dataPath("") + outputFile), "UTF-8"));
+      frasesFile.readHeaders();
+
+      while (frasesFile.readRecord ())
+      {
+        String frase = frasesFile.get("Frase");
+        println(frase);
+
+        if (frameCount%10==0) {
+          Sentence so = new Sentence(frase, width/2-70, height/2, 8);
+          addSentence(so);
+          addWords(so.words.values());
+        }
+      }
+
+      frasesFile.close();
+    } 
+    catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } 
+    catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
 
