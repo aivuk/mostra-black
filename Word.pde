@@ -23,7 +23,7 @@ class Word {
     this.count = 0;
     this.state = 0;
 
-    fontA = loadFont("Ziggurat-HTF-Black-32.vlw");
+    fontA = createFont("HelveticaBold",50);
     textFont(this.fontA, this.fsize);
     this.w = textWidth(this.s);   
     h = fsize;

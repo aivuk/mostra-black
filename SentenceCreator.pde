@@ -1,4 +1,4 @@
-  class SentenceCreator {
+class SentenceCreator {
 
   World world;
 
@@ -27,8 +27,6 @@
       this.world.addWord(word);
       pos_x += 5 + s.fsize*word.s.length();
     }
-     
-
   }
 
   void update() {
@@ -73,7 +71,7 @@
       for (Sentence si:this.world.sentences.values()) {
         breakSentence(si);
       }
-    } */
+    }
   }
 }
 

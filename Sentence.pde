@@ -51,5 +51,9 @@ class Sentence {
       break;
     }
   }
+
+ //   this.sentence = sentenceString.toUpperCase();
+ //   this.words = new HashMap<String, Word>();
+ //   this.words.put(sentence, new Word(sentence, this.x, this.y, this.fsize));
 }
 
