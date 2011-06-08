@@ -27,7 +27,7 @@ class World {
 
   void addWord(Word w) {
     if (this.words.containsKey(w.s)) {
-      this.words.get(w.s).count += 10;
+      this.words.get(w.s).count += 1;
       this.words.get(w.s).grow();
     } 
     else {

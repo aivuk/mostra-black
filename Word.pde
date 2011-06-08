@@ -46,7 +46,7 @@ class Word {
   }
 
   void grow() {
-    this.fsize += 1;
+    this.fsize += this.count*5;
     this.h = this.fsize;
     textFont(this.fontA, this.fsize);
     this.w = textWidth(this.s);    
@@ -60,7 +60,7 @@ class Word {
     // Let's find the screen position of the particle
     Vec2 pos = box2d.getBodyPixelCoord(body);
     // Is it off the bottom of the screen?
-    if (pos.y > height+w*h) {
+    if (pos.y > height + w*h) {
       killWord();
       return true;
     }
@@ -75,7 +75,7 @@ class Word {
     
     // We look at each body and get its screen position
     Vec2 pos = box2d.getBodyPixelCoord(body);
-    textFont(this.fontA, this.fsize + this.count);
+    textFont(this.fontA, this.fsize);
     this.w = textWidth(this.s);    
     // Get its angle of rotation
     float a = body.getAngle();
@@ -86,7 +86,7 @@ class Word {
     fill(colorf);
     stroke(0);
     // rect(0,0,w,h);
-    text(s, 0, 0, w, h + this.count);
+    text(s, 0, 0, w, h);
 
     popMatrix();
   }
@@ -112,7 +112,6 @@ class Word {
     body = box2d.createBody(bd);
     body.createShape(sd);
     body.setMassFromShapes();
-
     // Give it some initial random velocity
     body.setLinearVelocity(vel);
   //  body.setAngularVelocity();
