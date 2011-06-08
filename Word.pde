@@ -2,34 +2,42 @@ class Word {
 
   // We need to keep track of a Body and a width and height
   Body body;
+  Vec2 pos, vel; // posição e velocidade
   float w;
   float h;
   PFont fontA;
   String s;
   float fsize;
   color colorf;
-  float x;
-  float y;
   int count;
   float growSize;
   int state;
-  // Constructor
-  Word(String s, float x, float y, float fsize) {
+ 
+  Word(String s, Vec2 pos, Vec2 vel, float fsize) {
     this.s = s;
     this.fsize = fsize;
     this.growSize = this.fsize;  
-    this.x = x;
-    this.y = y;
+    
+    // Posição inicial
+    this.pos = pos;
+    
+    // Velocidade inicial
+    this.vel = vel;
+
     this.count = 0;
     this.state = 0;
 
+    // Configura fonte
     fontA = createFont("HelveticaBold",50);
     textFont(this.fontA, this.fsize);
+    
+    // Largura e Altura
     this.w = textWidth(this.s);   
     h = fsize;
+    
     // Add the box to the box2d world
     colorf = int(random(255));
-    makeBody(new Vec2(x, y), w, h);
+    makeBody(pos, w, h);
   }
 
   // This function removes the particle from the box2d world
@@ -71,7 +79,6 @@ class Word {
     this.w = textWidth(this.s);    
     // Get its angle of rotation
     float a = body.getAngle();
-
     rectMode(CENTER);
     pushMatrix();
     translate(pos.x, pos.y);
@@ -100,14 +107,14 @@ class Word {
 
     // Define the body and make it from the shape
     BodyDef bd = new BodyDef();
-    bd.position.set(box2d.coordPixelsToWorld(center));
+    bd.position.set(box2d.coordPixelsToWorld(pos));
 
     body = box2d.createBody(bd);
     body.createShape(sd);
     body.setMassFromShapes();
 
     // Give it some initial random velocity
-   // body.setLinearVelocity(new Vec2(random(-5, 5), random(2, 5)));
+    body.setLinearVelocity(vel);
   //  body.setAngularVelocity();
   }
 }

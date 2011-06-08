@@ -1,29 +1,29 @@
 class Sentence {
 
   HashMap <String, Word>words;
-  float x, y, v_x, v_y, fsize;
+  float v_x, v_y, fsize;
+  Vec2 pos;
   String sentence; 
   long timeToLive;
   long startTime;
   int state;
 
-  Sentence(String sentenceString, float x, float y, float fsize, long timeToLive, boolean breakWords/*, float v_x, float v_y*/) {
-    this.x = x;
-    this.y = y;
+  Sentence(String sentenceString, Vec2 pos, float fsize, long timeToLive, boolean breakWords/*, float v_x, float v_y*/) {
+    this.pos = pos;
     this.state = 0;
     this.timeToLive = timeToLive;
     this.fsize = fsize;
-    float pos_x = this.x;
-    float pos_y = this.y;
+    float pos_x = this.pos.x;
+    float pos_y = this.pos.y;
     this.startTime = millis();
     this.words = new HashMap<String, Word>();
     
     if (!breakWords) {
-      this.words.put(sentenceString, new Word(sentenceString, this.x, this.y, this.fsize));
+      this.words.put(sentenceString, new Word(sentenceString, pos, new Vec2(0,1), this.fsize));
     } else {
       for (String s:sentenceString.split(" ")) {
-        Word word = new Word(s, pos_x, pos_y, this.fsize);
-        word.growSize = 30;
+        Word word = new Word(s, new Vec2(pos_x, pos_y), new Vec2(0, 10), this.fsize);
+       // word.growSize = 30;
         this.words.put(word.s, word);
         //pos_x += 5 + s.fsize*word.s.length();
       }

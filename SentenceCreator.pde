@@ -1,17 +1,16 @@
 class SentenceCreator {
 
   World world;
+  float vec_x_min, vec_x_max, vec_y_min, vec_y_max;
 
-  SentenceCreator(World world) {
+  SentenceCreator(World world, float vec_x_min, float vec_x_max, float vec_y_min, float vec_y_max) {
     this.world = world;
+    this.vec_x_min = vec_x_min;
+    this.vec_x_max = vec_x_max;
+    this.vec_y_min = vec_y_min;
+    this.vec_y_max = vec_y_max;
   } 
-  /*
-  void createFromString(String sentence, float x, float y, float fsize) {
-   Sentence newSentence = new Sentence(sentence, x, y, fsize, 5000); 
-   this.world.addSentence(newSentence);
-   this.world.addWords(newSentence.words.values());
-   }
-   */
+
   void breakSentence(Sentence s) {
     // Remove sentença inteira do mundo
     Vec2 pos = box2d.getBodyPixelCoord(this.world.words.get(s.sentence).body);
@@ -22,7 +21,7 @@ class SentenceCreator {
 
     float pos_x = pos.x;
     for (String ss:s.sentence.split(" ")) {
-      Word word = new Word(ss, pos_x, pos.y, s.fsize);
+      Word word = new Word(ss, new Vec2(pos_x, pos.y), new Vec2(random(vec_x_min, vec_x_max), random(vec_y_min, vec_y_max)), s.fsize);
       word.growSize = 30;
       this.world.addWord(word);
       pos_x += 5 + s.fsize*word.s.length();
@@ -39,10 +38,9 @@ class SentenceCreator {
       while (frasesFile.readRecord ())
       {
         String frase = frasesFile.get("Frase");
-        println(frase);
-
-        if (frameCount%10==0) {
-          Sentence so = new Sentence(frase, width/2-70, height/2, 8, 5000, false);
+        
+        if (frameCount%40==0) {
+          Sentence so = new Sentence(frase, new Vec2(width/2-70, height/2), 8, 5000, true);
           world.addSentence(so);
           world.addWords(so.words.values());
         }
@@ -59,48 +57,7 @@ class SentenceCreator {
   }
   
   void update() {
-    String s = "Fazer sexo oral não cansa a boca"; 
-
-
-    // Adiciona Sentenca
-
-    if (frameCount == 10) {
-      Sentence so = new Sentence(s, width/2-70, height/2, 8, 5000, true);
-
-      this.world.addSentence(so);
-      this.world.addWords(so.words.values());
-    }
-
-    /*
-
-     if (frameCount == 15) {
-     String ss = "Fazer sexo cansa"; 
-     
-     Sentence so2 = new Sentence(ss, width/2-70, height/2, 8);
-     this.world.addSentence(so2);
-     this.world.addWords(so2.words.values());
-     }
-     
-     if (frameCount == 20) {
-     String ss = "Fazer sexo pode cansar"; 
-     
-     Sentence so3 = new Sentence(ss, width/2-70, height/2, 8);
-     this.world.addSentence(so3);
-     this.world.addWords(so3.words.values());
-     }
-     if (frameCount >= 20 && frameCount <= 2 ) {
-     String ss = "Fazer cansa"; 
-     
-     Sentence so3 = new Sentence(ss, width/2-70, height/2, 8);
-     this.world.addSentence(so3);
-     this.world.addWords(so3.words.values());
-     }
-     
-     if (frameCount == 100) {
-     for (Sentence si:this.world.sentences.values()) {
-     breakSentence(si);
-     }
-     }*/
+   
   }
 }
 

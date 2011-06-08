@@ -27,7 +27,7 @@ class World {
 
   void addWord(Word w) {
     if (this.words.containsKey(w.s)) {
-      this.words.get(w.s).count += 5;
+      this.words.get(w.s).count += 10;
       this.words.get(w.s).grow();
     } 
     else {
@@ -55,7 +55,7 @@ class World {
     for (String w:this.words.keySet()) { 
       Word word = this.words.get(w);
       word.display();
-
+/*
       if (word.state == 1 && i == 0) {
         i = 1;
         MouseJointDef j = new MouseJointDef();
@@ -78,7 +78,7 @@ class World {
          Vec2 mouseWorld = box2d.coordPixelsToWorld(mouseX,mouseY);
           mj.setTarget(mouseWorld);
           
-      }
+      }*/
     }
   }
 
@@ -94,7 +94,7 @@ class World {
     boundaries.add(new Boundary(0, height, 2*width, 1));
 
     // Cria fonte das frase
-    sc = new SentenceCreator(this);
+    sc = new SentenceCreator(this, -4, 4, 5, 10);
     sc.importWordsFromCsv();
 
   }
