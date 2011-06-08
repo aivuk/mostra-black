@@ -5,13 +5,13 @@
   SentenceCreator(World world) {
     this.world = world;
   } 
-
+/*
   void createFromString(String sentence, float x, float y, float fsize) {
-    Sentence newSentence = new Sentence(sentence, x, y, fsize); 
+    Sentence newSentence = new Sentence(sentence, x, y, fsize, 5000); 
     this.world.addSentence(newSentence);
     this.world.addWords(newSentence.words.values());
   }
-
+*/
   void breakSentence(Sentence s) {
     // Remove sentença inteira do mundo
     Vec2 pos = box2d.getBodyPixelCoord(this.world.words.get(s.sentence).body);
@@ -23,6 +23,7 @@
     float pos_x = pos.x;
     for (String ss:s.sentence.split(" ")) {
       Word word = new Word(ss, pos_x, pos.y, s.fsize);
+      word.growSize = 30;
       this.world.addWord(word);
       pos_x += 5 + s.fsize*word.s.length();
     }
@@ -33,13 +34,17 @@
   void update() {
     String s = "Fazer sexo oral não cansa a boca"; 
     
-    /*
+    
+    // Adiciona Sentenca
+    
     if (frameCount == 10) {
-      Sentence so = new Sentence(s, width/2-70, height/2, 8);
+      Sentence so = new Sentence(s, width/2-70, height/2, 8, 5000, true);
 
       this.world.addSentence(so);
       this.world.addWords(so.words.values());
     }
+
+    /*
 
     if (frameCount == 15) {
       String ss = "Fazer sexo cansa"; 

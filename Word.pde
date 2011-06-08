@@ -11,14 +11,17 @@ class Word {
   float x;
   float y;
   int count;
-  
+  float growSize;
+  int state;
   // Constructor
   Word(String s, float x, float y, float fsize) {
     this.s = s;
-    this.fsize = 8;
+    this.fsize = fsize;
+    this.growSize = this.fsize;  
     this.x = x;
     this.y = y;
     this.count = 0;
+    this.state = 0;
 
     fontA = loadFont("Ziggurat-HTF-Black-32.vlw");
     textFont(this.fontA, this.fsize);
@@ -35,11 +38,13 @@ class Word {
   }
 
   void grow() {
-    textFont(this.fontA, this.fsize + this.count);
+    this.fsize += 1;
+    this.h = this.fsize;
+    textFont(this.fontA, this.fsize);
     this.w = textWidth(this.s);    
     Vec2 pos = box2d.getBodyPixelCoord(this.body);
     box2d.destroyBody(this.body);
-    makeBody(pos, w, h + this.count);    
+    makeBody(pos, w, h);    
   }
 
   // Is the particle ready for deletion?
@@ -53,9 +58,13 @@ class Word {
     }
     return false;
   }
-  
+
   void display() {
 
+    if (this.fsize < this.growSize) {
+       this.grow(); 
+    }
+    
     // We look at each body and get its screen position
     Vec2 pos = box2d.getBodyPixelCoord(body);
     textFont(this.fontA, this.fsize + this.count);
@@ -98,7 +107,7 @@ class Word {
     body.setMassFromShapes();
 
     // Give it some initial random velocity
-    body.setLinearVelocity(new Vec2(random(-5, 5), random(2, 5)));
+   // body.setLinearVelocity(new Vec2(random(-5, 5), random(2, 5)));
   //  body.setAngularVelocity();
   }
 }

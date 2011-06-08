@@ -4,10 +4,12 @@ class World {
   HashMap<String, Sentence> sentences;
   ArrayList<Boundary> boundaries;
   SentenceCreator sc;
-
+  MouseJoint mj;
+  int i;
   World() {
     this.sentences = new HashMap<String, Sentence>();
     this.words = new HashMap<String, Word>();
+    i = 0;
   }
 
   // Adiciona uma frase no mundo
@@ -19,7 +21,7 @@ class World {
   //provavelmente depois de mostrar a sentenca e quebra-la
   void addWords(Collection<Word> ws) {
     for (Word w: ws) {
-       addWord(w);
+      addWord(w);
     }
   }
 
@@ -27,7 +29,8 @@ class World {
     if (this.words.containsKey(w.s)) {
       this.words.get(w.s).count += 5;
       this.words.get(w.s).grow();
-    } else {
+    } 
+    else {
       this.words.put(w.s, w);
     }
   }
@@ -35,6 +38,9 @@ class World {
   void update() {
     box2d.step();
     sc.update();
+    for (Sentence s: this.sentences.values()) {
+      s.update();
+    }
   }  
 
   void display() {
@@ -45,8 +51,34 @@ class World {
     }
 
     //desenha na tela as palavras
+    
     for (String w:this.words.keySet()) { 
-      this.words.get(w).display();
+      Word word = this.words.get(w);
+      word.display();
+
+      if (word.state == 1 && i == 0) {
+        i = 1;
+        MouseJointDef j = new MouseJointDef();
+        j.body1 = box2d.world.getGroundBody();
+      //  j.anchorPoint.set(-10,0);
+       // j.body1.position.set(-10,0);(0,0)
+        Vec2 fixed_point = new Vec2(0,0);
+        j.body2 = word.body;
+        j.target.set(fixed_point);
+        
+        j.maxForce = 1000.0f * word.body.m_mass;
+        j.frequencyHz = 5.0f;
+        j.dampingRatio = 0.9f;
+
+        mj = (MouseJoint) box2d.world.createJoint(j);
+        this.words.get(w).state = 2;
+      } else if (word.state == 2) {
+    
+      //  println(box2d.coordPixelsToWorld(mouseX,mouseY));
+         Vec2 mouseWorld = box2d.coordPixelsToWorld(mouseX,mouseY);
+          mj.setTarget(mouseWorld);
+          
+      }
     }
   }
 
