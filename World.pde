@@ -31,6 +31,7 @@ class World {
       this.words.get(w.s).grow();
     } 
     else {
+      w.makeBody(w.pos, w.w, w.fsize);
       this.words.put(w.s, w);
     }
   }

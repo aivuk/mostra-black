@@ -19,7 +19,7 @@ class SentenceCreator {
     this.y_min = y_min;
     this.y_max = y_max;
     this.startFontSize = startFontSize;
-    this.timeInWords = 3000;
+    this.timeInWords = 1000;
     this.animation = false;
     this.wordsToAdd = new Stack();
   } 
@@ -87,7 +87,7 @@ class SentenceCreator {
       float now = millis();
       if (now - this.lastWordTime >= this.timeInWords) {
        Word w = this.wordsToAdd.pop();
-       w.makeBody(w.pos, w.w, w.fsize);
+      // w.makeBody(w.pos, w.w, w.fsize);
        this.world.addWord(w);
      //  w.body.wakeUp();
        this.lastWordTime = millis();
