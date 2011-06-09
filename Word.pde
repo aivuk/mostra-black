@@ -37,7 +37,8 @@ class Word {
     
     // Add the box to the box2d world
     colorf = int(random(255));
-    makeBody(pos, w, h);
+    //makeBody(pos, w, h);
+    //this.body.putToSleep(); 
   }
 
   // This function removes the particle from the box2d world
@@ -52,7 +53,7 @@ class Word {
     this.w = textWidth(this.s);    
     Vec2 pos = box2d.getBodyPixelCoord(this.body);
     box2d.destroyBody(this.body);
-    makeBody(pos, w, h);    
+    makeBody(pos, w, h);   
   }
 
   // Is the particle ready for deletion?
