@@ -51,9 +51,9 @@ class Word {
     this.h = this.fsize;
     textFont(this.fontA, this.fsize);
     this.w = textWidth(this.s);    
-    Vec2 pos = box2d.getBodyPixelCoord(this.body);
+    this.pos = box2d.getBodyPixelCoord(this.body);
     box2d.destroyBody(this.body);
-    makeBody(pos, w, h);   
+    makeBody(this.pos, w, h);   
   }
 
   // Is the particle ready for deletion?
