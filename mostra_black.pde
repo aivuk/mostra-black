@@ -34,6 +34,12 @@ void setup() {
   //Inicializa box2d world
 
   // Inicializa box2d world
+  
+  //verifica se esta em modo de configuração para setar a posicao dos boxes
+
+  }
+
+
   box2d = new PBox2D(this);
   box2d.createWorld();
   box2d.setGravity(0, -1);
@@ -47,5 +53,11 @@ void draw() {
   background(bck_color);
   w.update();
   w.display();
+  
 }
 
+void mousePressed(){
+   if(mous 
+  
+  
+}

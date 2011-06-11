@@ -49,7 +49,7 @@ class SentenceCreator {
 
     try {
 
-      CsvReader frasesFile = new CsvReader(new InputStreamReader(new FileInputStream(dataPath("") + outputFile), "UTF-8"));
+      CsvReader frasesFile = new CsvReader(new InputStreamReader(new FileInputStream(dataPath(outputFile)), "UTF-8"));
       frasesFile.readHeaders();
 
       while (frasesFile.readRecord ())

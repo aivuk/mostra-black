@@ -42,10 +42,10 @@ class Boundary {
 
   // Draw the boundary, if it were at an angle we'd have to do something fancier
   void display(){
-    fill(0);
-    stroke(0);
-    rectMode(CENTER);
-    rect(x, y, w, h);
+    glg1.fill(0);
+    glg1.stroke(0);
+    glg1.rectMode(CENTER);
+    glg1.rect(x, y, w, h);
   }
   
 }
