@@ -83,13 +83,21 @@ void draw() {
 
   surface2.render(g1, width/2  );
 }
-
-void mouseClicked() {
-
+long time;
+void mouseDragged() {
   println(mouseX + " " + mouseY);
   box2d.setGravity(0, random(100, 200));
+  time = millis();
 }
-
+void mouseReleased() {
+  if (millis() - time>300) {
+    time = millis();
+    box2d.setGravity(0, -100);
+  }
+  else {
+    box2d.setGravity(0, -10);
+  }
+}
 
 void keyPressed() {
 
@@ -111,6 +119,5 @@ void keyPressed() {
     break;
   }
 }
-
 
 
