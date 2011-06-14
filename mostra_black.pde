@@ -17,7 +17,7 @@ import netP5.*;
 World w;
 float g_x = 0;
 float g_y = -1.0;
-color bck_color = color(100, 24, 44);
+color bck_color = color(100, 24, 22);
 int E=2;
 
 PBox2D box2d;
@@ -37,13 +37,13 @@ String outputFile = "FrasesLista.csv"; //csv
 
 
 
+
 void setup() {
   // size(730*E, 335*E, OPENGL);
   // size(screen.width, screen.height, GLConstants.GLGRAPHICS);
-  size(1360, 768, GLConstants.GLGRAPHICS);
-  glg1 = new GLGraphicsOffScreen(this, 1360, 768, true, 4);
+  size(2000, 768, GLConstants.GLGRAPHICS);
+  glg1 = new GLGraphicsOffScreen(this, 2000, 768, true, 4);
   ks = new Keystone(this);
-
   surface = ks.createCornerPinSurface(0, 0, width/2, height, 40, 0);
   surface2 = ks.createCornerPinSurface(width/2, 0, width/2, height, 40, width/2);
 
@@ -66,7 +66,7 @@ void setup() {
   glg1.beginDraw();
   box2d = new PBox2D(this);
   box2d.createWorld();
-  box2d.setGravity(0, -10);
+  box2d.setGravity(0, 0);
   //cria o mundo e as condicoes de contorno
   w = new World(); 
   w.create();
@@ -94,6 +94,8 @@ void draw() {
   surface2.render(g1);
 }
 long time;
+
+
 void mouseDragged() {
   println(mouseX + " " + mouseY);
   box2d.setGravity(0, random(100, 200));
@@ -108,6 +110,17 @@ void mouseReleased() {
     box2d.setGravity(0, -10);
   }
 }
+
+void mouseClicked() {
+  PFont f = createFont("Helvetica",32);
+  textAlign(CENTER);
+
+  // Set the font and its size (in units of pixels)
+  textFont(f, 32);
+  String s = "x: "+mouseX + "y: " + mouseY;
+  text(s,mouseX,mouseY, textWidth(s),32);
+}
+  
 
 void keyPressed() {
 
@@ -129,7 +142,7 @@ void keyPressed() {
     break;
   case 'r':
     ks.resetMesh();
-    
+
     break;
   }
 }
