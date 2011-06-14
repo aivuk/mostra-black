@@ -10,6 +10,7 @@ class Sentence {
   int state;
   PFont fontA;
   float sizeFactor;
+  float toRandX;
 
   Sentence(String sentenceString, Vec2 pos, Vec2 vel, float fsize, long timeToLive, boolean breakWords) {
     this.pos = pos;
@@ -24,6 +25,7 @@ class Sentence {
     this.fontA = createFont("HelveticaBold", 50);
     //this.words = new HashMap<String, Word>();
     this.words = new ArrayList<Word>();
+    this.toRandX = 0;
 
     if (!breakWords) {
       //this.words.put(sentenceString, new Word(sentenceString, pos, new Vec2(0,1), this.fsize));
@@ -48,13 +50,41 @@ class Sentence {
 
     switch (this.state) {
 
-      case 0:
-        if (now - startTime <= timeToLive) {
-         this.pos.y -= 1;
-         this.sizeFactor += 0.1;  
-        }  
-        break;
-     }
+    case 0:
+      if (now - startTime <= timeToLive) {
+
+        if (floor(this.toRandX) == 0) {
+          boolean r = random(1) < 0.5;
+
+          if ((r && this.pos.x < width/2 + 100) || (!r && this.pos.x < width/2 - 100)) {
+            this.toRandX = random(50,70);
+          } 
+          else {
+            this.toRandX = -random(50,70);
+          }
+        } else {
+          if (this.toRandX > 0) {
+            this.pos.x += 1;
+            this.toRandX -= 1;
+          } else {
+            this.pos.x -= 1;
+            this.toRandX += 1;
+          }
+            
+        }
+ 
+
+          if (this.pos.y >= 150) {
+          this.pos.y -= 1;
+
+          this.sizeFactor += 0.005;
+        } 
+        else {
+          this.state = 1;
+        }
+      }  
+      break;
+    }
   }
 
   void display() {
