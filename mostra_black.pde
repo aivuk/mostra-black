@@ -49,3 +49,9 @@ void draw() {
   w.display();
 }
 
+void mouseClicked(){
+  
+ println(mouseX + " " + mouseY); 
+  
+}
+

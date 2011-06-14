@@ -98,6 +98,7 @@ class World {
     boundaries = new ArrayList<Boundary>();
     boundaries.add(new Boundary(150*E+80*E/2, 260*E-80*E/2, 80*E, 260*E)); 
     boundaries.add(new Boundary(490*E+80*E/2, 260*E-80*E/2, 80*E, 260*E));
+    boundaries.add(new Boundary(width/2,height, 80, 150));
 
     boundaries.add(new Boundary(0, 0, 1, height*2));
     boundaries.add(new Boundary(0, 0, width*2, 1));
