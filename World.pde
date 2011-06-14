@@ -1,20 +1,23 @@
 class World {
 
   HashMap<String, Word> words;
-  HashMap<String, Sentence> sentences;
+  //HashMap<String, Sentence> sentences;
+  ArrayList<Sentence> sentences;
   ArrayList<Boundary> boundaries;
   SentenceCreator sc;
   MouseJoint mj;
   int i;
   World() {
-    this.sentences = new HashMap<String, Sentence>();
+//    this.sentences = new HashMap<String, Sentence>();
+    this.sentences = new ArrayList<Sentence>();
     this.words = new HashMap<String, Word>();
     i = 0;
   }
 
   // Adiciona uma frase no mundo
   void addSentence(Sentence s) {
-    this.sentences.put(s.sentence, s);
+   // this.sentences.put(s.sentence, s);
+    this.sentences.add(s);
   }
 
   // Adiciona um conjunto de palavras a este mundo
@@ -39,7 +42,7 @@ class World {
   void update() {
     box2d.step();
     sc.update();
-    for (Sentence s: this.sentences.values()) {
+    for (Sentence s: this.sentences) {
       s.update();
     }
   }  
@@ -56,6 +59,13 @@ class World {
     for (String w:this.words.keySet()) { 
       Word word = this.words.get(w);
       word.display();
+    }
+
+    // Desenha frase na tela
+    for (Sentence s:this.sentences) {
+      s.display(); 
+    }
+
 /*
       if (word.state == 1 && i == 0) {
         i = 1;
@@ -80,7 +90,7 @@ class World {
           mj.setTarget(mouseWorld);
           
       }*/
-    }
+    
   }
 
   void create() {
@@ -95,7 +105,7 @@ class World {
     boundaries.add(new Boundary(0, height, 2*width, 1));
 
     // Cria fonte das frase
-    sc = new SentenceCreator(this, -4, 4, 5, 10, width/2 - 40, width/2 + 40, height/2, height/2, 8);
+    sc = new SentenceCreator(this, -4, 4, 5, 10, width/2 - 40, width/2 + 40, height/2, height/2, 25);
     sc.importWordsFromCsv();
     sc.startAnimation();
   }

@@ -1,30 +1,41 @@
 class Sentence {
 
-  HashMap <String, Word>words;
+  //HashMap <String, Word>words;
+  ArrayList<Word> words;
   float v_x, v_y, fsize;
-  Vec2 pos;
+  Vec2 pos, vel;
   String sentence; 
   long timeToLive;
   long startTime;
   int state;
+  PFont fontA;
+  float sizeFactor;
 
-  Sentence(String sentenceString, Vec2 pos, float fsize, long timeToLive, boolean breakWords/*, float v_x, float v_y*/) {
+  Sentence(String sentenceString, Vec2 pos, Vec2 vel, float fsize, long timeToLive, boolean breakWords) {
     this.pos = pos;
+    this.vel = vel;
     this.state = 0;
     this.timeToLive = timeToLive;
     this.fsize = fsize;
     float pos_x = this.pos.x;
     float pos_y = this.pos.y;
     this.startTime = millis();
-    this.words = new HashMap<String, Word>();
-    
+    this.sizeFactor = 1;
+    this.fontA = createFont("HelveticaBold", 50);
+    //this.words = new HashMap<String, Word>();
+    this.words = new ArrayList<Word>();
+
     if (!breakWords) {
-      this.words.put(sentenceString, new Word(sentenceString, pos, new Vec2(0,1), this.fsize));
-    } else {
+      //this.words.put(sentenceString, new Word(sentenceString, pos, new Vec2(0,1), this.fsize));
+      this.words.add(new Word(sentenceString, pos, new Vec2(0, 1), this.fsize));
+    } 
+    else {
+
       for (String s:sentenceString.split(" ")) {
-        Word word = new Word(s, new Vec2(pos_x, pos_y), new Vec2(0, 10), this.fsize);
-       // word.growSize = 30;
-        this.words.put(word.s, word);
+        Word word = new Word(s, new Vec2(pos_x, pos_y), new Vec2(0, 0), this.fsize);
+        // word.growSize = 30;
+        this.words.add(word);
+        pos_x += word.w + 10; 
         //pos_x += 5 + s.fsize*word.s.length();
       }
     }
@@ -37,23 +48,19 @@ class Sentence {
 
     switch (this.state) {
 
-    case 0:
-      if (now - startTime >= timeToLive) {
-        this.state = 1;
-        // Cria vinculos
-        for (Word w:this.words.values()) {
-//          w.killWord();
-          w.state = 1;
-            
-        }
-        println("cria vinculos");
-      }  
-      break;
-    }
+      case 0:
+        if (now - startTime <= timeToLive) {
+         this.pos.y -= 1;
+         this.sizeFactor += 0.1;  
+        }  
+        break;
+     }
   }
 
- //   this.sentence = sentenceString.toUpperCase();
- //   this.words = new HashMap<String, Word>();
- //   this.words.put(sentence, new Word(sentence, this.x, this.y, this.fsize));
+  void display() {
+    textFont(this.fontA, this.sizeFactor*this.fsize);
+    textAlign(CENTER);
+    text(this.sentence, this.pos.x, this.pos.y, this.sizeFactor*100, this.sizeFactor*50);
+  }
 }
 

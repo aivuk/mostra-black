@@ -12,6 +12,8 @@ class Word {
   int count;
   float growSize;
   int state;
+  boolean hasBody;
+  float angle;
  
   Word(String s, Vec2 pos, Vec2 vel, float fsize) {
     this.s = s;
@@ -24,8 +26,12 @@ class Word {
     // Velocidade inicial
     this.vel = vel;
 
+    this.angle = 0;
+
     this.count = 0;
     this.state = 0;
+
+    this.hasBody = false;
 
     // Configura fonte
     fontA = createFont("HelveticaBold",50);
@@ -70,23 +76,29 @@ class Word {
 
   void display() {
 
+    
     if (this.fsize < this.growSize) {
        this.grow(); 
     }
     
     // We look at each body and get its screen position
-    Vec2 pos = box2d.getBodyPixelCoord(body);
+    if (this.hasBody) {
+      this.pos = box2d.getBodyPixelCoord(body);
+      this.angle = body.getAngle();
+      println(pos);
+
+    } 
+    
     textFont(this.fontA, this.fsize);
     this.w = textWidth(this.s);    
     // Get its angle of rotation
-    float a = body.getAngle();
     rectMode(CENTER);
     pushMatrix();
-    translate(pos.x, pos.y);
-    rotate(-a);
+    translate(pos.x, this.pos.y);
+    rotate(-this.angle);
     fill(colorf);
     stroke(0);
-    // rect(0,0,w,h);
+    //rect(0,0,w,h);
     text(s, 0, 0, w, h);
 
     popMatrix();
@@ -97,7 +109,7 @@ class Word {
 
     // Define a polygon (this is what we use for a rectangle)
     PolygonDef sd = new PolygonDef();
-    float box2dW = box2d.scalarPixelsToWorld(w_/2);
+    float box2dW = box2d.scalarPixelsToWorld(w_);
     float box2dH = box2d.scalarPixelsToWorld(h_/2);
     sd.setAsBox(box2dW, box2dH);
 

@@ -4,6 +4,7 @@ class SentenceCreator {
   float vec_x_min, vec_x_max, vec_y_min, vec_y_max;
   float x_min, x_max, y_min, y_max;
   Stack <Word>wordsToAdd;
+  Stack <Sentence>sentencesToAdd;
   float timeInWords, lastWordTime;
   Boolean animation;
   float startFontSize;
@@ -22,6 +23,7 @@ class SentenceCreator {
     this.timeInWords = 1000;
     this.animation = false;
     this.wordsToAdd = new Stack();
+    this.sentencesToAdd = new Stack();
   } 
 
   void breakSentence(Sentence s) {
@@ -44,7 +46,7 @@ class SentenceCreator {
   Word createWord(String wordString) {
     return new Word(wordString, new Vec2(random(this.x_min, this.x_max), random(this.y_min, this.y_max)), new Vec2(random(vec_x_min, vec_x_max), random(vec_y_min, vec_y_max)), this.startFontSize);
   }    
-    
+
   void importWordsFromCsv() {
 
     try {
@@ -55,7 +57,8 @@ class SentenceCreator {
       while (frasesFile.readRecord ())
       {
         String frase = frasesFile.get("Frase");
-        
+        this.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), 10, 10000, true));
+/*
         if (frameCount%40==0) {
           //Sentence so = new Sentence(frase, new Vec2(width/2-70, height/2), 8, 5000, true);
           //world.addSentence(so);
@@ -64,9 +67,8 @@ class SentenceCreator {
             Word w = this.createWord(ws);
             this.wordsToAdd.push(w);
           }
-        }
+        }*/
       }
-
       frasesFile.close();
     } 
     catch (FileNotFoundException e) {
@@ -76,23 +78,25 @@ class SentenceCreator {
       e.printStackTrace();
     }
   }
-  
+
   void startAnimation() {
     this.animation = true;
     this.lastWordTime = 0;
   }
-  
+
   void update() {
-    if (this.animation && !this.wordsToAdd.empty()) {
+    if (this.animation && !this.sentencesToAdd.empty()) {
       float now = millis();
-      if (now - this.lastWordTime >= this.timeInWords) {
-       Word w = this.wordsToAdd.pop();
-      // w.makeBody(w.pos, w.w, w.fsize);
-       this.world.addWord(w);
-     //  w.body.wakeUp();
-       this.lastWordTime = millis();
-      }
-    }     
+      Sentence s = this.sentencesToAdd.pop();
+      this.world.addSentence(s);
+/*      if (now - this.lastWordTime >= this.timeInWords) {
+        Word w = this.wordsToAdd.pop();
+        // w.makeBody(w.pos, w.w, w.fsize);
+        this.world.addWord(w);
+        //  w.body.wakeUp();
+        this.lastWordTime = millis();
+      }*/
+    }
   }
 }
 
