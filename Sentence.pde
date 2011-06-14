@@ -57,10 +57,10 @@ class Sentence {
           boolean r = random(1) < 0.5;
 
           if ((r && this.pos.x < width/2 + 100) || (!r && this.pos.x < width/2 - 100)) {
-            this.toRandX = random(50,70);
+            this.toRandX = random(30,40);
           } 
           else {
-            this.toRandX = -random(50,70);
+            this.toRandX = -random(30,40);
           }
         } else {
           if (this.toRandX > 0) {
