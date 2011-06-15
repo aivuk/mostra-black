@@ -16,7 +16,7 @@
  */
 
 
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
@@ -51,9 +51,13 @@ public class Keystone {
   /**
    	 * @param parent applet
    	 */
+
+  int surfaceSelected;
+
   public Keystone(PApplet parent) {
     this.parent = parent;
     this.parent.registerMouseEvent(this);
+    this.parent.registerKeyEvent(this);
 
     surfaces = new ArrayList<CornerPinSurface>();
     dragged = null;
@@ -233,6 +237,87 @@ public class Keystone {
 
     case MouseEvent.MOUSE_RELEASED:
       dragged = null;
+      break;
+    }
+  }
+
+  public void keyEvent(KeyEvent e) {
+    float speed;
+    CornerPinSurface s;
+    //seeciona a superficie para fazer o ajuste fino
+    if (e.isShiftDown()) {
+      speed = 10;
+    } 
+    else {
+      speed = 2;
+    } 
+
+    switch (e.getKeyCode()) {
+    case KeyEvent.VK_1:
+      surfaceSelected=0;
+      parent.println("Superficie " + surfaceSelected + " Selecionada");
+      break;
+
+    case KeyEvent.VK_2:
+      surfaceSelected=1;
+      parent.println("Superficie " + surfaceSelected + " Selecionada");
+
+      break;
+
+    case KeyEvent.VK_LEFT : 
+      if (calibrate) {
+        parent.println("Esquerda...");
+
+        s = (CornerPinSurface)surfaces.get(surfaceSelected);
+        dragged = s.mesh[s.meshClicked];
+        float xx = s.mesh[s.meshClicked].x - 0.05F*speed;
+        float yy = s.mesh[s.meshClicked].y;
+
+
+        dragged.moveTo(xx, yy);
+      }
+
+      break;
+    case KeyEvent.VK_RIGHT: 
+
+      if (calibrate) {
+        parent.println("Direitra...");
+        s = (CornerPinSurface)surfaces.get(surfaceSelected);
+        dragged = s.mesh[s.meshClicked];
+        float xx = s.mesh[s.meshClicked].x + 0.05F*speed;
+        float yy = s.mesh[s.meshClicked].y;
+        dragged.moveTo(xx, yy);
+      }
+
+
+      break;
+    case KeyEvent.VK_UP   : 
+
+      if (calibrate) {
+        parent.println("Cima...");
+        s = (CornerPinSurface)surfaces.get(surfaceSelected);
+        dragged = s.mesh[s.meshClicked];
+        float xx = s.mesh[s.meshClicked].x;
+        float yy = s.mesh[s.meshClicked].y - 0.05F*speed;
+        dragged.moveTo(xx, yy);
+      }
+
+
+      break;
+    case KeyEvent.VK_DOWN : 
+
+      if (calibrate) {
+        parent.println("baixo...");
+        s = (CornerPinSurface)surfaces.get(surfaceSelected);
+        dragged = s.mesh[s.meshClicked];
+        float xx = s.mesh[s.meshClicked].x;
+        float yy = s.mesh[s.meshClicked].y + 0.05F*speed;
+        dragged.moveTo(xx, yy);
+      }
+
+
+      break;
+    default:
       break;
     }
   }

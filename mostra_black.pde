@@ -120,7 +120,8 @@ void mouseClicked() {
   String s = "x: "+mouseX + "y: " + mouseY;
   text(s,mouseX,mouseY, textWidth(s),32);
 }
-  
+ 
+
 
 void keyPressed() {
 

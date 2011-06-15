@@ -1,4 +1,4 @@
-    /**
+/**
  * Copyright (C) 2009 David Bouchard
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -44,7 +44,7 @@ public class CornerPinSurface implements Draggable {
   final int TR; // top right
   final int BL; // bottom left
   final int BR; // bottom right
-
+  int meshClicked; //control point actual clicked
   int w;
   int h;
 
@@ -68,7 +68,6 @@ public class CornerPinSurface implements Draggable {
     //this.y = yy;
     res++;
     this.res = res;
-
     // initialize the point array
     mesh = new MeshPoint[res*res];
     for (int i=0; i < mesh.length; i++) {
@@ -226,8 +225,14 @@ public class CornerPinSurface implements Draggable {
    	 */
   private void renderControlPoints(PGraphics g) {
     g.stroke(controlPointColor);
-    g.noFill();
+
     for (int i=0; i < mesh.length; i++) {
+      if (meshClicked == i) {
+        g.fill(0, 0, 230);
+      }
+      else {
+        g.noFill();
+      }
       if (mesh[i].isControlPoint()) {
         g.ellipse(mesh[i].x, mesh[i].y, 30, 30);
         g.ellipse(mesh[i].x, mesh[i].y, 10, 10);
@@ -245,7 +250,7 @@ public class CornerPinSurface implements Draggable {
   /**
    	 * Sets the control points color
    	 */
-  public void setControlPointsColor( int newColor ) { 
+  public void setControlPointsColor(int newColor ) { 
     controlPointColor = newColor;
   }
 
@@ -257,7 +262,11 @@ public class CornerPinSurface implements Draggable {
     x -= this.x;
     y -= this.y;
     for (int i=0; i < mesh.length; i++) {
-      if (PApplet.dist(mesh[i].x, mesh[i].y, x, y) < 30 && mesh[i].isControlPoint()) return mesh[i];
+      if (PApplet.dist(mesh[i].x, mesh[i].y, x, y) < 30 && mesh[i].isControlPoint()) {
+        //PApplet.println(i);
+        meshClicked = i;
+        return mesh[i];
+      }
     }
 
     // then, see if the surface itself is selected
