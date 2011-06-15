@@ -90,11 +90,11 @@ class World {
     //boundaries.add(new Boundary(490*E+80*E/2, 260*E-80*E/2, 80*E, 260*E));
     //(x2 - x1) , y2-y1
 
-    boundaries.add(new Boundary(510, 455, (600-20)/2, (716-90))); 
+    boundaries.add(new Boundary(346, 140, (600-20)/2, (716-90))); 
     
-    boundaries.add(new Boundary(1000, 700, (600-200)/2, (716-410))); 
+    boundaries.add(new Boundary(838+(600-200)/4, 534, (600-200)/2, (716-410))); 
     
-    boundaries.add(new Boundary(1341+125, 455, (600-100)/2, (716-90))); 
+    boundaries.add(new Boundary(1332, 143, (600-70)/2, (716-90))); 
 
     //    boundaries.add(new Boundary(351, 721, 495, 721));
 
@@ -108,10 +108,10 @@ class World {
     //1335 751
     //1569 748
 
-    boundaries.add(new Boundary(0, 0, 10, height));
-    boundaries.add(new Boundary(0, 0, width, 10));
-    boundaries.add(new Boundary(width-10, 0, 10, height));
-    boundaries.add(new Boundary(0, height-10, width, 10));
+    boundaries.add(new Boundary(0, 0, 1, height));
+    boundaries.add(new Boundary(0, 0, width, 1));
+    boundaries.add(new Boundary(width-1, 0, 1, height));
+    boundaries.add(new Boundary(0, height-1, width, 1));
 
    // boundaries.add(new Boundary(width/2,height-700, 10, 700));
 
