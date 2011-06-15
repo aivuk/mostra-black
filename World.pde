@@ -113,6 +113,8 @@ class World {
     boundaries.add(new Boundary(width-10, 0, 10, height));
     boundaries.add(new Boundary(0, height-10, width, 10));
 
+   // boundaries.add(new Boundary(width/2,height-700, 10, 700));
+
     // Cria fonte das frase
     sc = new SentenceCreator(this, -4, 4, 5, 10, width/2 - 40, width/2 + 40, height/2, height/2, 25);
     sc.importWordsFromCsv();
