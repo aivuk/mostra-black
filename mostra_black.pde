@@ -41,7 +41,7 @@ String outputFile = "FrasesLista.csv"; //csv
 void setup() {
   // size(730*E, 335*E, OPENGL);
   // size(screen.width, screen.height, GLConstants.GLGRAPHICS);
-  size(2000, 768, GLConstants.GLGRAPHICS);
+  size(2000, 708, GLConstants.GLGRAPHICS);
   glg1 = new GLGraphicsOffScreen(this, 2000, 768, true, 4);
   ks = new Keystone(this);
   surface = ks.createCornerPinSurface(0, 0, width/2, height, 40, 0);

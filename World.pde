@@ -108,10 +108,10 @@ class World {
     //1335 751
     //1569 748
 
-    boundaries.add(new Boundary(0, 0, 1, height*2));
-    boundaries.add(new Boundary(0, 0, width*2, 1));
-    boundaries.add(new Boundary(width, 0, 1, height*2));
-    boundaries.add(new Boundary(0, height, 2*width, 1));
+    boundaries.add(new Boundary(0, 0, 10, height));
+    boundaries.add(new Boundary(0, 0, width, 10));
+    boundaries.add(new Boundary(width-10, 0, 10, height));
+    boundaries.add(new Boundary(0, height-10, width, 10));
 
     // Cria fonte das frase
     sc = new SentenceCreator(this, -4, 4, 5, 10, width/2 - 40, width/2 + 40, height/2, height/2, 25);

@@ -58,7 +58,6 @@ public class Keystone {
     this.parent = parent;
     this.parent.registerMouseEvent(this);
     this.parent.registerKeyEvent(this);
-
     surfaces = new ArrayList<CornerPinSurface>();
     dragged = null;
 
@@ -241,6 +240,10 @@ public class Keystone {
     }
   }
 
+
+
+
+
   public void keyEvent(KeyEvent e) {
     float speed;
     CornerPinSurface s;
@@ -253,6 +256,7 @@ public class Keystone {
     } 
 
     switch (e.getKeyCode()) {
+
     case KeyEvent.VK_1:
       surfaceSelected=0;
       parent.println("Superficie " + surfaceSelected + " Selecionada");
