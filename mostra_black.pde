@@ -28,9 +28,10 @@ void setup() {
   hint(ENABLE_NATIVE_FONTS); //fontes nativas do JAVA, para as fontes serem renderizadas em tempo real
   smooth();
   initCSV(); // testa se o arquivo CSV existe , caso contrario cria ele
+  loadBadWords();
   //Modo full screen
   //fs = new FullScreen(this); 
-  ///fs.enter();
+  ///fs.enter(); 
   //Inicializa box2d world
 
   // Inicializa box2d world

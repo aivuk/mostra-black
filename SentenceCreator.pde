@@ -1,5 +1,6 @@
 class SentenceCreator {
 
+  Set<String> badwords;
   World world;
   float vec_x_min, vec_x_max, vec_y_min, vec_y_max;
   float x_min, x_max, y_min, y_max;
@@ -24,7 +25,30 @@ class SentenceCreator {
     this.animation = false;
     this.wordsToAdd = new Stack();
     this.sentencesToAdd = new Stack();
+    this.badwords = new 
   } 
+
+  void loadBadWords() {
+      try {
+
+      CsvReader badwordsFile = new CsvReader(new InputStreamReader(new FileInputStream(dataPath("") + "badwords.csv"), "UTF-8"));
+      badwordsFile.readHeaders();
+
+      while (badwordsFile.readRecord()) {
+        String badword = badwordsFile.get("badword");
+        this.badwords.add(badword); 
+      }
+      badwordsFile.close();
+    } 
+    
+    catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    
+    catch (IOException e) {
+      e.printStackTrace();
+    }  
+  }
 
   void breakSentence(Sentence s) {
     // Remove sentença inteira do mundo
