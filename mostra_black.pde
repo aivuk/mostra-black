@@ -1,4 +1,4 @@
-  import pbox2d.*;
+import pbox2d.*;
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
@@ -10,6 +10,15 @@ import codeanticode.glgraphics.*;
 
 import com.csvreader.*; // lib para csv
 
+//lib para load de sample....
+import ddf.minim.*;
+
+Minim minim;
+AudioPlayer ambientSound;
+AudioSample sequenceLSound;
+
+
+//libs para comunicao TCP/IP com OSC
 import oscP5.*;
 import netP5.*;
 
@@ -39,6 +48,13 @@ String outputFile = "FrasesLista.csv"; //csv
 
 
 void setup() {
+
+
+  minim = new Minim(this); //inicia sáida de som
+  ambientSound =minim.loadFile("data/ambient2.wav", 2048);
+  sequenceLSound =minim.loadSample("data/sequence.wav", 2048);
+  ambientSound.play(0);
+  
   // size(730*E, 335*E, OPENGL);
   // size(screen.width, screen.height, GLConstants.GLGRAPHICS);
   size(2000, 768, GLConstants.GLGRAPHICS);
@@ -110,15 +126,15 @@ void mouseReleased() {
 }
 
 void mouseClicked() {
-  PFont f = createFont("Helvetica",32);
+  PFont f = createFont("Helvetica", 32);
   textAlign(CENTER);
 
   // Set the font and its size (in units of pixels)
   textFont(f, 32);
   String s = "x: "+mouseX + "y: " + mouseY;
-  text(s,mouseX,mouseY, textWidth(s),32);
+  text(s, mouseX, mouseY, textWidth(s), 32);
 }
- 
+
 
 
 void keyPressed() {
@@ -162,5 +178,17 @@ void oscEvent(OscMessage theOscMessage) {
   else if (foo.equals("/android/debug")) {
     println("Server received: "+theOscMessage.get(0).stringValue());
   }
+}
+
+
+void stop()
+{
+  // always close Minim audio classes when you are done with them
+  ambientSound.close();
+  sequenceLSound.close();
+  // always stop Minim before exiting.
+  minim.stop();
+
+  super.stop();
 }
 

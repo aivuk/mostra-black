@@ -128,6 +128,7 @@ class SentenceCreator {
           this.world.actualSentence = null;  
       }
     } else if (!this.sentencesToAdd.empty()) {
+      sequenceLSound.trigger();
       Sentence s = this.sentencesToAdd.pop();
       this.world.actualSentence = s;
     }
