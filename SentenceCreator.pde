@@ -56,7 +56,7 @@ class SentenceCreator {
     String cleanSentence = "";
 
     for (String word:sentence.split(" ")) {
-       if (!this.badwords.contains(word)) {
+       if (!this.badwords.contains(word.toLowerCase())) {
          cleanSentence += word + ' ';
        }     
      }

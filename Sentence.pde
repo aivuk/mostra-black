@@ -57,24 +57,24 @@ class Sentence {
           boolean r = random(1) < 0.5;
 
           if ((r && this.pos.x < width/2 + 100) || (!r && this.pos.x < width/2 - 100)) {
-            this.toRandX = random(30,40);
+            this.toRandX = random(30, 40);
           } 
           else {
-            this.toRandX = -random(30,40);
+            this.toRandX = -random(30, 40);
           }
-        } else {
+        } 
+        else {
           if (this.toRandX > 0) {
             this.pos.x += 1;
             this.toRandX -= 1;
-          } else {
+          } 
+          else {
             this.pos.x -= 1;
             this.toRandX += 1;
           }
-            
         }
- 
 
-          if (this.pos.y >= 150) {
+        if (this.pos.y >= 150) {
           this.pos.y -= 1;
 
           this.sizeFactor += 0.005;

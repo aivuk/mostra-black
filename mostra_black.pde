@@ -13,7 +13,7 @@ import com.csvreader.*; // lib para csv
 
 World w;
 float g_x = 0;
-float g_y = -1.0;
+float g_y = -1.0;  
 color bck_color = color(100, 24, 44);
 int E=2;
 PBox2D box2d;
