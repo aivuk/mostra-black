@@ -18,6 +18,7 @@ class Word {
   Word(String s, Vec2 pos, Vec2 vel, float fsize) {
     this.s = s;
     this.fsize = fsize;
+    
     this.growSize = this.fsize;  
     
     // Posição inicial
@@ -34,15 +35,15 @@ class Word {
     this.hasBody = false;
 
     // Configura fonte
-    fontA = createFont("HelveticaBold",50);
-    textFont(this.fontA, this.fsize);
+    fontA = createFont("FuturaBold",50);
+    glg1.textFont(this.fontA, this.fsize);
     
     // Largura e Altura
-    this.w = textWidth(this.s);   
+    this.w = glg1.textWidth(this.s);   
     h = fsize;
     
     // Add the box to the box2d world
-    colorf = int(random(255));
+    colorf = int(random(128,255));
     //makeBody(pos, w, h);
     //this.body.putToSleep(); 
   }
@@ -55,8 +56,8 @@ class Word {
   void grow() {
     this.fsize += this.count*5;
     this.h = this.fsize;
-    textFont(this.fontA, this.fsize);
-    this.w = textWidth(this.s);    
+    glg1.textFont(this.fontA, this.fsize);
+    this.w = glg1.textWidth(this.s);    
     this.pos = box2d.getBodyPixelCoord(this.body);
     box2d.destroyBody(this.body);
     makeBody(this.pos, w, h);   
@@ -82,6 +83,8 @@ class Word {
     }
     
     // We look at each body and get its screen position
+    
+    /*
     if (this.hasBody) {
       this.pos = box2d.getBodyPixelCoord(body);
       this.angle = body.getAngle();
@@ -100,8 +103,22 @@ class Word {
     stroke(0);
     //rect(0,0,w,h);
     text(s, 0, 0, w, h);
+    */
 
-    popMatrix();
+    Vec2 pos = box2d.getBodyPixelCoord(body);
+    glg1.textFont(this.fontA, this.fsize);
+    this.w = glg1.textWidth(this.s);    
+    // Get its angle of rotation
+    float a = body.getAngle();
+    glg1.rectMode(CENTER);
+    glg1.pushMatrix();
+    glg1.translate(pos.x, pos.y);
+    glg1.rotate(-a);
+    glg1.fill(colorf);
+    glg1.stroke(0);
+    //glg1.rect(0,0,w,h);
+    glg1.text(s, 0, 0, w, h);
+    glg1.popMatrix();
   }
 
   // This function adds the rectangle to the box2d world

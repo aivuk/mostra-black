@@ -25,7 +25,7 @@ class Boundary {
     // Figure out the box2d coordinates
     float box2dW = box2d.scalarPixelsToWorld(w/2);
     float box2dH = box2d.scalarPixelsToWorld(h/2);
-    Vec2 center = new Vec2(x, y);
+    Vec2 center = new Vec2(x+w/2, y+h/2);
 
     // Define the polygon
     PolygonDef sd = new PolygonDef();
@@ -42,10 +42,10 @@ class Boundary {
 
   // Draw the boundary, if it were at an angle we'd have to do something fancier
   void display(){
-    fill(0);
-    stroke(0);
-    rectMode(CENTER);
-    rect(x, y, w, h);
+    glg1.fill(0);
+    glg1.stroke(0);
+    glg1.rectMode(CORNER);
+    glg1.rect(x, y, w, h);  
   }
   
 }

@@ -1,17 +1,16 @@
-
 void initCSV() {
 
 
   //gera e le arquivo dentro do diretorio /Data/ 
 
-  File f = new File(dataPath("") + outputFile); //retorna true se já existe 
+  File f = new File(dataPath(outputFile)); //retorna true se já existe 
   // println(f.getPath());
   //  println(outputFile);
   boolean alreadyExists = f.exists();
 
   try {
     // use FileWriter constructor that specifies open for appending
-    OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(dataPath("") + outputFile, true), "UTF-8"); 
+    OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(dataPath(outputFile), true), "UTF-8"); 
     CsvWriter csvOutput = new CsvWriter(out, ',');
     //  println(outputFile);
     // if the file didn't already exist then we need to write out the header line
@@ -49,7 +48,7 @@ void writeFrase2CSV(String frase) {
     // use FileWriter constructor that specifies open for appending
 
     //stream com ecoding UTF-8
-    OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(dataPath("") + outputFile, true), "UTF-8"); 
+    OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(dataPath(outputFile), true), "UTF-8"); 
     CsvWriter csvOutput = new CsvWriter(out, ',');
 
 
