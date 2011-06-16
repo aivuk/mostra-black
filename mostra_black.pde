@@ -164,9 +164,3 @@ void oscEvent(OscMessage theOscMessage) {
   }
 }
 
-void mouseClicked(){
-  
- println(mouseX + " " + mouseY); 
-  
-}
-
