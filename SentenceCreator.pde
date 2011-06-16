@@ -25,7 +25,8 @@ class SentenceCreator {
     this.animation = false;
     this.wordsToAdd = new Stack();
     this.sentencesToAdd = new Stack();
-    this.badwords = new 
+    this.badwords = new HashSet<String>();
+    this.loadBadWords();
   } 
 
   void loadBadWords() {
@@ -38,8 +39,9 @@ class SentenceCreator {
         String badword = badwordsFile.get("badword");
         this.badwords.add(badword); 
       }
+      println(this.badwords.size());
       badwordsFile.close();
-    } 
+    }
     
     catch (FileNotFoundException e) {
       e.printStackTrace();
@@ -48,6 +50,18 @@ class SentenceCreator {
     catch (IOException e) {
       e.printStackTrace();
     }  
+  }
+
+  String cleanSentence(String sentence) {
+    String cleanSentence = "";
+
+    for (String word:sentence.split(" ")) {
+       if (!this.badwords.contains(word)) {
+         cleanSentence += word + ' ';
+       }     
+     }
+     
+    return cleanSentence;
   }
 
   void breakSentence(Sentence s) {
@@ -82,6 +96,7 @@ class SentenceCreator {
       {
         String frase = frasesFile.get("Frase");
         this.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), 10, 10000, true));
+        println(this.cleanSentence(frase));
 /*
         if (frameCount%40==0) {
           //Sentence so = new Sentence(frase, new Vec2(width/2-70, height/2), 8, 5000, true);
