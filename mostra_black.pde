@@ -56,7 +56,7 @@ void setup() {
   /* inicia libs do som */
 
   minim = new Minim(this); //inicia sáida de som
-  ambientSound =minim.loadFile("data/ambient2.wav", 2048);
+  ambientSound =minim.loadFile("data/ambient2.mp3", 2048);
   sequenceLSound =minim.loadSample("data/sequence.wav", 2048);
   ambientSound.play(0);
 
