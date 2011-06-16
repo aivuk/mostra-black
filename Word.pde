@@ -54,13 +54,13 @@ class Word {
   }
 
   void grow() {
-    this.fsize += this.count*5;
-    this.h = this.fsize;
-    glg1.textFont(this.fontA, this.fsize);
+    float newSize = this.fsize + 5*this.count;
+    this.h = newSize;
+    glg1.textFont(this.fontA, newSize);
     this.w = glg1.textWidth(this.s);    
     this.pos = box2d.getBodyPixelCoord(this.body);
     box2d.destroyBody(this.body);
-    makeBody(this.pos, w, h);   
+    makeBody(this.pos, w, h); 
   }
 
   // Is the particle ready for deletion?
@@ -77,11 +77,6 @@ class Word {
 
   void display() {
 
-    
-    if (this.fsize < this.growSize) {
-       this.grow(); 
-    }
-    
     // We look at each body and get its screen position
     
     /*
@@ -106,7 +101,7 @@ class Word {
     */
 
     Vec2 pos = box2d.getBodyPixelCoord(body);
-    glg1.textFont(this.fontA, this.fsize);
+    glg1.textFont(this.fontA, this.fsize + this.count*5);
     this.w = glg1.textWidth(this.s);    
     // Get its angle of rotation
     float a = body.getAngle();
@@ -117,7 +112,7 @@ class Word {
     glg1.fill(colorf);
     glg1.stroke(0);
     //glg1.rect(0,0,w,h);
-    glg1.text(s, 0, 0, w, h);
+    glg1.text(s, 0, 0, w, this.fsize + this.count*5);
     glg1.popMatrix();
   }
 

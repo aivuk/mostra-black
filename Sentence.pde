@@ -12,11 +12,10 @@ class Sentence {
   float sizeFactor;
   float toRandX;
 
-  Sentence(String sentenceString, Vec2 pos, Vec2 vel, float fsize, long timeToLive, boolean breakWords) {
+  Sentence(String sentenceString, Vec2 pos, Vec2 vel, float fsize, boolean breakWords) {
     this.pos = pos;
     this.vel = vel;
     this.state = 0;
-    this.timeToLive = timeToLive;
     this.fsize = fsize;
     float pos_x = this.pos.x;
     float pos_y = this.pos.y;
@@ -30,8 +29,7 @@ class Sentence {
     if (!breakWords) {
       //this.words.put(sentenceString, new Word(sentenceString, pos, new Vec2(0,1), this.fsize));
       this.words.add(new Word(sentenceString, pos, new Vec2(0, 1), this.fsize));
-    } 
-    else {
+    } else {
 
       for (String s:sentenceString.split(" ")) {
         Word word = new Word(s, new Vec2(pos_x, pos_y), new Vec2(0, 0), this.fsize);
@@ -51,7 +49,7 @@ class Sentence {
     switch (this.state) {
 
     case 0:
-      if (now - startTime <= timeToLive) {
+      if (this.pos.y >= 550) {
 
         if (floor(this.toRandX) == 0) {
           boolean r = random(1) < 0.5;
@@ -74,15 +72,12 @@ class Sentence {
           }
         }
 
-        if (this.pos.y >= 150) {
-          this.pos.y -= 1;
-
-          this.sizeFactor += 0.005;
-        } 
-        else {
-          this.state = 1;
-        }
-      }  
+        this.pos.y -= 1;
+        this.sizeFactor += 0.005;
+     
+      } else {
+          this.state = 1;        
+      }
       break;
     }
   }

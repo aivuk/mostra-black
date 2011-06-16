@@ -39,7 +39,6 @@ class SentenceCreator {
         String badword = badwordsFile.get("badword");
         this.badwords.add(badword); 
       }
-      println(this.badwords.size());
       badwordsFile.close();
     }
     
@@ -52,16 +51,16 @@ class SentenceCreator {
     }  
   }
 
-  String cleanSentence(String sentence) {
-    String cleanSentence = "";
+  ArrayList<String> cleanSentence(String sentence) {
+    ArrayList<String> cleanWords = new ArrayList();
 
     for (String word:sentence.split(" ")) {
        if (!this.badwords.contains(word.toLowerCase())) {
-         cleanSentence += word + ' ';
+         cleanWords.add(word);
        }     
      }
      
-    return cleanSentence;
+    return cleanWords;
   }
 
   void breakSentence(Sentence s) {
@@ -92,21 +91,9 @@ class SentenceCreator {
       CsvReader frasesFile = new CsvReader(new InputStreamReader(new FileInputStream(dataPath(outputFile)), "UTF-8"));
       frasesFile.readHeaders();
 
-      while (frasesFile.readRecord ())
-      {
+      while (frasesFile.readRecord ()) {
         String frase = frasesFile.get("Frase");
-        this.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), 10, 10000, true));
-        println(this.cleanSentence(frase));
-/*
-        if (frameCount%40==0) {
-          //Sentence so = new Sentence(frase, new Vec2(width/2-70, height/2), 8, 5000, true);
-          //world.addSentence(so);
-          //world.addWords(so.words.values());
-          for (String ws:frase.split(" ")) {
-            Word w = this.createWord(ws);
-            this.wordsToAdd.push(w);
-          }
-        }*/
+        this.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), 10, true));
       }
       frasesFile.close();
     } 
@@ -123,18 +110,26 @@ class SentenceCreator {
     this.lastWordTime = 0;
   }
 
+  void addWords(Sentence s) {
+   
+       for (String w:this.cleanSentence(s.sentence)) {
+         Word word = new Word(w, new Vec2(s.pos.x, s.pos.y), new Vec2(random(vec_x_min, vec_x_max), random(vec_y_min, vec_y_max)), s.fsize);
+         this.world.addWord(word);
+       }
+  }
+
   void update() {
-    if (this.animation && !this.sentencesToAdd.empty()) {
-      float now = millis();
+    
+    if (this.world.actualSentence != null) {
+      Sentence s = this.world.actualSentence;
+      s.update();
+      if (s.state == 1) {
+          this.addWords(s);
+          this.world.actualSentence = null;  
+      }
+    } else if (!this.sentencesToAdd.empty()) {
       Sentence s = this.sentencesToAdd.pop();
-      this.world.addSentence(s);
-/*      if (now - this.lastWordTime >= this.timeInWords) {
-        Word w = this.wordsToAdd.pop();
-        // w.makeBody(w.pos, w.w, w.fsize);
-        this.world.addWord(w);
-        //  w.body.wakeUp();
-        this.lastWordTime = millis();
-      }*/
+      this.world.actualSentence = s;
     }
   }
 }

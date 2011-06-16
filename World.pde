@@ -2,22 +2,16 @@ class World {
 
   HashMap<String, Word> words;
   //HashMap<String, Sentence> sentences;
-  ArrayList<Sentence> sentences;
+  Sentence actualSentence;
   ArrayList<Boundary> boundaries;
   SentenceCreator sc;
   MouseJoint mj;
   int i;
   World() {
 //    this.sentences = new HashMap<String, Sentence>();
-    this.sentences = new ArrayList<Sentence>();
+    //this.sentence = new ArrayList<Sentence>();
     this.words = new HashMap<String, Word>();
     i = 0;
-  }
-
-  // Adiciona uma frase no mundo
-  void addSentence(Sentence s) {
-   // this.sentences.put(s.sentence, s);
-    this.sentences.add(s);
   }
 
   // Adiciona um conjunto de palavras a este mundo
@@ -30,10 +24,10 @@ class World {
 
   void addWord(Word w) {
     if (this.words.containsKey(w.s)) {
-      this.words.get(w.s).count += 1;
-      this.words.get(w.s).grow();
-    } 
-    else {
+      Word word = this.words.get(w.s);
+      word.count += 1;
+      word.grow();
+    } else {
       w.makeBody(w.pos, w.w, w.fsize);
       this.words.put(w.s, w);
     }
@@ -42,9 +36,6 @@ class World {
   void update() {
     box2d.step();
     sc.update();
-    for (Sentence s: this.sentences) {
-      s.update();
-    }
   }  
 
   void display() {
@@ -62,8 +53,8 @@ class World {
     }
 
     // Desenha frase na tela
-    for (Sentence s:this.sentences) {
-      s.display(); 
+    if (this.actualSentence != null) {
+      this.actualSentence.display(); 
     }
 /*
       if (word.state == 1 && i == 0) {
