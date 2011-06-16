@@ -266,6 +266,8 @@ public class CornerPinSurface implements Draggable {
         //PApplet.println(i);
         meshClicked = i;
         return mesh[i];
+      }else{
+       meshClicked = -1; 
       }
     }
 
@@ -273,6 +275,7 @@ public class CornerPinSurface implements Draggable {
     if (isMouseOver()) {
       clickX = x;
       clickY = y; 
+      parent.println(this);
       return this;
     }
     return null;
