@@ -25,21 +25,6 @@ class Sentence {
     //this.words = new HashMap<String, Word>();
     this.words = new ArrayList<Word>();
     this.toRandX = 0;
-
-    if (!breakWords) {
-      //this.words.put(sentenceString, new Word(sentenceString, pos, new Vec2(0,1), this.fsize));
-      this.words.add(new Word(sentenceString, pos, new Vec2(0, 1), this.fsize));
-    } else {
-
-      for (String s:sentenceString.split(" ")) {
-        Word word = new Word(s, new Vec2(pos_x, pos_y), new Vec2(0, 0), this.fsize);
-        // word.growSize = 30;
-        this.words.add(word);
-        pos_x += word.w + 10; 
-        //pos_x += 5 + s.fsize*word.s.length();
-      }
-    }
-
     this.sentence = sentenceString;
   }
 
@@ -49,12 +34,12 @@ class Sentence {
     switch (this.state) {
 
     case 0:
-      if (this.pos.y >= 550) {
+      if (this.pos.y >= 250) {
 
         if (floor(this.toRandX) == 0) {
           boolean r = random(1) < 0.5;
 
-          if ((r && this.pos.x < width/2 + 100) || (!r && this.pos.x < width/2 - 100)) {
+          if ((r && this.pos.x < width/2 + this.sizeFactor*150) || (!r && this.pos.x < width/2 - this.sizeFactor*150)) {
             this.toRandX = random(30, 40);
           } 
           else {
@@ -72,8 +57,8 @@ class Sentence {
           }
         }
 
-        this.pos.y -= 1;
-        this.sizeFactor += 0.005;
+        this.pos.y -= 3;
+        this.sizeFactor += 0.003;
      
       } else {
           this.state = 1;        
@@ -84,8 +69,10 @@ class Sentence {
 
   void display() {
     textFont(this.fontA, this.sizeFactor*this.fsize);
+    float w = glg1.textWidth(this.sentence);    
     textAlign(CENTER);
-    text(this.sentence, this.pos.x, this.pos.y, this.sizeFactor*100, this.sizeFactor*50);
+    rectMode(CENTER);
+    text(this.sentence, this.pos.x, this.pos.y, this.sizeFactor*300, this.sizeFactor*200);
   }
 }
 

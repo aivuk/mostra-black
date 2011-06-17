@@ -115,7 +115,7 @@ class World {
    // boundaries.add(new Boundary(width/2,height-700, 10, 700));
 
     // Cria fonte das frase
-    sc = new SentenceCreator(this, -4, 4, 5, 10, width/2 - 40, width/2 + 40, height/2, height/2, 25);
+    sc = new SentenceCreator(this, -4, 4, 5, 10, width/2 - 40, width/2 + 40, height/2, height/2, 20);
     sc.importWordsFromCsv();
     sc.startAnimation();
   }

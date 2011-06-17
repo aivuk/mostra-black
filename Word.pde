@@ -35,7 +35,7 @@ class Word {
     this.hasBody = false;
 
     // Configura fonte
-    fontA = createFont("FuturaBold",50);
+    fontA = createFont("FuturaBold", 50);
     glg1.textFont(this.fontA, this.fsize);
     
     // Largura e Altura

@@ -55,7 +55,7 @@ class SentenceCreator {
     ArrayList<String> cleanWords = new ArrayList();
 
     for (String word:sentence.split(" ")) {
-       if (!this.badwords.contains(word.toLowerCase())) {
+       if (!this.badwords.contains(word.toLowerCase()) && word.length() >= 2) {
          cleanWords.add(word);
        }     
      }
@@ -93,7 +93,7 @@ class SentenceCreator {
 
       while (frasesFile.readRecord ()) {
         String frase = frasesFile.get("Frase");
-        this.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), 10, true));
+        this.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), this.startFontSize, true));
       }
       frasesFile.close();
     } 

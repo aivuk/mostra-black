@@ -174,28 +174,29 @@ void keyPressed() {
 //evento vindo do SMS
 void oscEvent(OscMessage theOscMessage) {
   // print the message for now
+  Locale ptLocale = new Locale("pt", "BR");
   String foo = theOscMessage.addrPattern();
   if (foo.equals("/android/twitter")) {
 
-    String frase = theOscMessage.get(0).stringValue().toUpperCase();
+    String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
     createSentence(frase);
     println("Server twitter received: "+theOscMessage.get(0).stringValue());
   }
   else if (foo.equals("/android/sms")) {
 
-    String frase = theOscMessage.get(0).stringValue().toUpperCase();
+    String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
     createSentence(frase);
     println("Server sms received: "+theOscMessage.get(0).stringValue());
   }
   else if (foo.equals("/android/hp")) {
 
-    String frase = theOscMessage.get(0).stringValue().toUpperCase();
+    String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
     createSentence(frase);
     println("Server hp received: "+theOscMessage.get(0).stringValue());
   }
   else if (foo.equals("/android/debug")) {
 
-    String frase = theOscMessage.get(0).stringValue().toUpperCase();
+    String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
     createSentence(frase);
     println("Server received: "+theOscMessage.get(0).stringValue());
   }
