@@ -55,7 +55,7 @@ class SentenceCreator {
     ArrayList<String> cleanWords = new ArrayList();
 
     for (String word:sentence.split(" ")) {
-       if (!this.badwords.contains(word.toLowerCase()) && word.length() >= 2) {
+       if (!this.badwords.contains(word.toLowerCase()) && word.length() > 2) {
          cleanWords.add(word);
        }     
      }
@@ -113,7 +113,7 @@ class SentenceCreator {
   void addWords(Sentence s) {
    
        for (String w:this.cleanSentence(s.sentence)) {
-         Word word = new Word(w, new Vec2(s.pos.x, s.pos.y), new Vec2(random(vec_x_min, vec_x_max), random(vec_y_min, vec_y_max)), s.fsize);
+         Word word = new Word(w, new Vec2(s.pos.x, s.pos.y - 100), new Vec2(random(vec_x_min, vec_x_max), random(vec_y_min, vec_y_max)), s.fsize);
          this.world.addWord(word);
        }
   }
@@ -123,7 +123,7 @@ class SentenceCreator {
     if (this.world.actualSentence != null) {
       Sentence s = this.world.actualSentence;
       s.update();
-      if (s.state == 1) {
+      if (s.state == 2) {
           this.addWords(s);
           this.world.actualSentence = null;  
       }

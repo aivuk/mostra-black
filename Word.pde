@@ -79,27 +79,6 @@ class Word {
 
     // We look at each body and get its screen position
     
-    /*
-    if (this.hasBody) {
-      this.pos = box2d.getBodyPixelCoord(body);
-      this.angle = body.getAngle();
-      println(pos);
-
-    } 
-    
-    textFont(this.fontA, this.fsize);
-    this.w = textWidth(this.s);    
-    // Get its angle of rotation
-    rectMode(CENTER);
-    pushMatrix();
-    translate(pos.x, this.pos.y);
-    rotate(-this.angle);
-    fill(colorf);
-    stroke(0);
-    //rect(0,0,w,h);
-    text(s, 0, 0, w, h);
-    */
-
     Vec2 pos = box2d.getBodyPixelCoord(body);
     glg1.textFont(this.fontA, this.fsize + this.count*5);
     this.w = glg1.textWidth(this.s);    

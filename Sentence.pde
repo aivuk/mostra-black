@@ -29,8 +29,6 @@ class Sentence {
   }
 
   void update() {
-    long now = millis();
-
     switch (this.state) {
 
     case 0:
@@ -61,9 +59,15 @@ class Sentence {
         this.sizeFactor += 0.003;
      
       } else {
+          this.startTime = millis();
           this.state = 1;        
       }
       break;
+      case 1:
+        long n = millis();
+        if (n - this.startTime >= 5000) {
+           this.state = 2; 
+        }
     }
   }
 
@@ -72,7 +76,10 @@ class Sentence {
     float w = glg1.textWidth(this.sentence);    
     textAlign(CENTER);
     rectMode(CENTER);
+    fill(0);
     text(this.sentence, this.pos.x, this.pos.y, this.sizeFactor*300, this.sizeFactor*200);
+    fill(255);
+    text(this.sentence, this.pos.x + 2, this.pos.y + 2, this.sizeFactor*300, this.sizeFactor*200);
   }
 }
 

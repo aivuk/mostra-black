@@ -26,7 +26,7 @@ import netP5.*;
 World w;
 float g_x = 0;
 float g_y = -1.0;
-color bck_color = color(100, 24, 22);
+color bck_color = color(27, 4, 3);
 int E=2;
 
 PBox2D box2d;
@@ -45,7 +45,7 @@ NetAddress remoteAddress;
 
 String outputFile = "FrasesLista.csv"; //csv
 
-
+int resizeMode = 0;
 
 
 void setup() {
@@ -97,6 +97,7 @@ void setup() {
 }
 
 void draw() {
+  background(0);
   glg1.beginDraw();
 
   glg1.background(bck_color);
@@ -147,27 +148,111 @@ void mouseClicked() {
 
 
 void keyPressed() {
+  Boundary b;
+  if (key == CODED) {
+    switch(keyCode) {
+    case LEFT:
+      switch (resizeMode) {
+        case 1:
+          b = w.boundaries.get(0);
+          w.boundaries.remove(0);
+          box2d.destroyBody(b.b);
+          w.boundaries.add(0, new Boundary(b.x - 1, b.y, b.w, b.h));
+          break;
+        case 2:
+          b = w.boundaries.get(0);
+                    w.boundaries.remove(0);
 
-  switch(key) {
-  case 'c':
-    // enter/leave calibration mode, where surfaces can be warped 
-    // & moved
-    ks.toggleCalibration();
-    break;
+          box2d.destroyBody(b.b);
+          w.boundaries.add(0, new Boundary(b.x, b.y, b.w - 1, b.h));
+          break;
+        case 5:
+          b = w.boundaries.get(2);
+          w.boundaries.remove(2);
+          box2d.destroyBody(b.b);
+          w.boundaries.add(2, new Boundary(b.x - 1, b.y, b.w, b.h));
+          break;
+        case 6:
+          b = w.boundaries.get(2);
+          w.boundaries.remove(2);
+          box2d.destroyBody(b.b);
+          w.boundaries.add(2, new Boundary(b.x, b.y, b.w - 1, b.h));
+          break;
+      }
+      break;
+    case RIGHT:
+      switch (resizeMode) {
+        case 1:
+          b = w.boundaries.get(0);
+          w.boundaries.remove(0);
+          box2d.destroyBody(b.b);  
+          w.boundaries.add(0, new Boundary(b.x + 1, b.y, b.w, b.h));
+          break;
+        case 2:
+          b = w.boundaries.get(0);
+          w.boundaries.remove(0);
+          box2d.destroyBody(b.b);
+          w.boundaries.add(0, new Boundary(b.x, b.y, b.w + 1, b.h));
+          break;
+        case 5:
+          b = w.boundaries.get(2);
+          w.boundaries.remove(2);
+          box2d.destroyBody(b.b);  
+          w.boundaries.add(2, new Boundary(b.x + 1, b.y, b.w, b.h));
+          break;
+        case 6:
+          b = w.boundaries.get(2);
+          w.boundaries.remove(2);
+          box2d.destroyBody(b.b);
+          w.boundaries.add(2, new Boundary(b.x, b.y, b.w + 1, b.h));
+          break;
+      }
+      break;
 
-  case 'l':
-    // loads the saved layout
-    ks.load();
-    break;
+    }
+  } 
+  else {
 
-  case 's':
-    // saves the layout
-    ks.save();
-    break;
-  case 'r':
-    ks.resetMesh();
+    switch(key) {
+    case 'c':
+      // enter/leave calibration mode, where surfaces can be warped 
+      // & moved
+      ks.toggleCalibration();
+      break;
 
-    break;
+    case 'l':
+      // loads the saved layout
+      ks.load();
+      break;
+
+    case 's':
+      // saves the layout
+      ks.save();
+      break;
+    case 'r':
+      ks.resetMesh();
+      break;
+
+    case 'Q':
+      if (resizeMode != 1 && resizeMode != 2) {
+        resizeMode = 1;
+      } else if (resizeMode == 1) {
+         resizeMode = 2; 
+      } else {
+         resizeMode = 1; 
+      }
+      break;
+    case 'E':
+      if (resizeMode != 5 && resizeMode != 6) {
+        resizeMode = 5;
+      } else if (resizeMode == 5) {
+         resizeMode = 6; 
+      } else {
+         resizeMode = 5; 
+      }
+      break;
+
+    }
   }
 }
 
