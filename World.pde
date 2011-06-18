@@ -4,6 +4,7 @@ class World {
   //HashMap<String, Sentence> sentences;
   Sentence actualSentence;
   ArrayList<Boundary> boundaries;
+  ArrayList<Line> lines;
   SentenceCreator sc;
   MouseJoint mj;
   int i;
@@ -43,6 +44,10 @@ class World {
     //desenha na tela as condicoes de contorno
     for (Boundary b:boundaries) {
       b.display();
+    }
+
+    for (Line l:this.lines) {
+      l.display(); 
     }
 
     //desenha na tela as palavras
@@ -118,6 +123,9 @@ class World {
 
     // Cria fonte das frase
     sc = new SentenceCreator(this, -25, 25, 8, 13, width/2 - 40, width/2 + 40, height/2, height/2, 20);
+    Boundary b = this.boundaries.get(1);
+    Line l = new Line(b.x - b.w/2, b.y - b.h/2, b.x + b.w/2, b.y + b.h/2, 20., this.boundaries);
+    this.lines.add(l);
     sc.importWordsFromCsv();
     sc.startAnimation();
   }
