@@ -52,7 +52,7 @@ void writeFrase2CSV(String frase) {
     CsvWriter csvOutput = new CsvWriter(out, ',');
 
 
-
+    frase = frase.toUpperCase();
     csvOutput.write(str(day()));
     csvOutput.write(str(month()));
     csvOutput.write(str(hour()));

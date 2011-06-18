@@ -34,7 +34,7 @@ class SentenceCreator {
 
       CsvReader badwordsFile = new CsvReader(new InputStreamReader(new FileInputStream(dataPath("") + "badwords.csv"), "UTF-8"));
       badwordsFile.readHeaders();
-
+      
       while (badwordsFile.readRecord()) {
         String badword = badwordsFile.get("badword");
         this.badwords.add(badword); 
@@ -90,9 +90,10 @@ class SentenceCreator {
 
       CsvReader frasesFile = new CsvReader(new InputStreamReader(new FileInputStream(dataPath(outputFile)), "UTF-8"));
       frasesFile.readHeaders();
-
+      
       while (frasesFile.readRecord ()) {
         String frase = frasesFile.get("Frase");
+        frase = frase.toUpperCase();
         this.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), this.startFontSize, true));
       }
       frasesFile.close();

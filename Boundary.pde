@@ -12,16 +12,16 @@ class Boundary {
   float y;
   float w;
   float h;
-
+  int t;
   // But we also have to make a body for box2d to know about it
   Body b;
 
-  Boundary(float x_, float y_, float w_, float h_) {
+  Boundary(float x_, float y_, float w_, float h_, int t_) {
     x = x_;
     y = y_;
     w = w_;
     h = h_;
-
+    t = t_;
     // Figure out the box2d coordinates
     float box2dW = box2d.scalarPixelsToWorld(w/2);
     float box2dH = box2d.scalarPixelsToWorld(h/2);
@@ -41,12 +41,22 @@ class Boundary {
   }
 
   // Draw the boundary, if it were at an angle we'd have to do something fancier
-  void display(){
+  void display() {
     glg1.fill(0);
     glg1.stroke(0);
-    glg1.rectMode(CORNER);
-    glg1.rect(x, y, w, h);  
+    if (t==0) {
+      glg1.imageMode(CORNER);
+
+      glg1.image(porta1, x, y);
+    }
+    else if (t==2) {
+      glg1.imageMode(CORNER);
+      glg1.image(porta2, x, y);
+    } 
+    else {
+      glg1.rectMode(CORNER);
+      glg1.rect(x, y, w, h);
+    }
   }
-  
 }
 

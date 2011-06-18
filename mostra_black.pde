@@ -32,9 +32,13 @@ int E=2;
 PBox2D box2d;
 GLGraphicsOffScreen glg1;
 
+GLTexture porta1,porta2,bg;
+
 
 CornerPinSurface surface, surface2;
 Keystone ks;    
+
+
 
 
 static final int OSCPORT = 7777;
@@ -49,8 +53,8 @@ int resizeMode = 0;
 
 void writeObjectCoords(World w) {
 
-    //stream com ecoding UTF-8
-    try {
+  //stream com ecoding UTF-8
+  try {
     OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(dataPath("") + "objcoords.csv", false)); 
     CsvWriter csvOutput = new CsvWriter(out, ',');
 
@@ -59,7 +63,7 @@ void writeObjectCoords(World w) {
     csvOutput.write("w");
     csvOutput.write("h");
     csvOutput.endRecord();
-    
+
     for (Boundary b:w.boundaries) {
       csvOutput.write(str(b.x));
       csvOutput.write(str(b.y));
@@ -68,8 +72,8 @@ void writeObjectCoords(World w) {
       csvOutput.endRecord();
     }
     csvOutput.close();
-    }
-      catch (IOException e) {
+  }
+  catch (IOException e) {
     e.printStackTrace();
   }
 }
@@ -77,28 +81,34 @@ void writeObjectCoords(World w) {
 
 void loadObjectsCoords(World w) {
 
-      try {
-      CsvReader coordsFile = new CsvReader(new InputStreamReader(new FileInputStream(dataPath("") + "objcoords.csv")));
-      coordsFile.readHeaders();
-      
-      w.boundaries = new ArrayList<Boundary>();
-      int i = 0;
-      while (coordsFile.readRecord()) {
-        
-        String bx = coordsFile.get("x");
-        String by = coordsFile.get("y");
-        String bw = coordsFile.get("w");
-        String bh = coordsFile.get("h");
-        if (i == 0 || i == 2) {
-          w.boundaries.add(new Boundary(float(bx), float(by), float(bw), float(bh))); 
-        } else { 
-          w.boundaries.add(new Boundary(float(bx), float(by), float(bw), float(bh))); 
+  try {
+    CsvReader coordsFile = new CsvReader(new InputStreamReader(new FileInputStream(dataPath("") + "objcoords.csv")));
+    coordsFile.readHeaders();
+
+    w.boundaries = new ArrayList<Boundary>();
+    int i = 0;
+    while (coordsFile.readRecord ()) {
+
+      String bx = coordsFile.get("x");
+      String by = coordsFile.get("y");
+      String bw = coordsFile.get("w");
+      String bh = coordsFile.get("h");
+      if (i == 0 || i == 2) {
+        if (i==0) { 
+          w.boundaries.add(new Boundary(float(bx), float(by), float(bw), float(bh), 0));
+        } 
+        else {
+          w.boundaries.add(new Boundary(float(bx), float(by), float(bw), float(bh), 2));
         }
-        ++i;
       }
-      coordsFile.close();
+      else { 
+        w.boundaries.add(new Boundary(float(bx), float(by), float(bw), float(bh), 1));
       }
-        catch (IOException e) {
+      ++i;
+    }
+    coordsFile.close();
+  }
+  catch (IOException e) {
     e.printStackTrace();
   }
 }
@@ -115,12 +125,17 @@ void setup() {
   sequenceLSound =minim.loadSample("data/sequence.wav", 2048);
   ambientSound.play(0);
 
+
   // size(730*E, 335*E, OPENGL);
   // size(screen.width, screen.height, GLConstants.GLGRAPHICS);
 
   /*tamnho da janela, opengl via GLGraphics lib */
   size(2048, 768, GLConstants.GLGRAPHICS);
   glg1 = new GLGraphicsOffScreen(this, 2048, 768, true, 4);
+
+  porta1 = new GLTexture(this, "Still/porta1-shadow.png");
+  porta2 = new GLTexture(this, "Still/porta2-shadow.png");
+  bg = new GLTexture(this, "Still/bg.jpg");
   /*cria keystone para ajustes da posicao das texturas */
 
   ks = new Keystone(this);
@@ -155,7 +170,7 @@ void draw() {
   background(0);
   glg1.beginDraw();
 
-  glg1.background(bck_color);
+  glg1.image(bg,0,0);
   w.update();
   w.display();
 
@@ -211,161 +226,161 @@ void keyPressed() {
         b = w.boundaries.get(0);
         w.boundaries.remove(0);
         box2d.destroyBody(b.b);
-        w.boundaries.add(0, new Boundary(b.x - 1, b.y, b.w, b.h));
+        w.boundaries.add(0, new Boundary(b.x - 1, b.y, b.w, b.h, 0));
         break;
       case 2:
         b = w.boundaries.get(0);
         w.boundaries.remove(0);
         box2d.destroyBody(b.b);
-        w.boundaries.add(0, new Boundary(b.x, b.y, b.w - 1, b.h));
+        w.boundaries.add(0, new Boundary(b.x, b.y, b.w - 1, b.h, 0));
         break;
-       case 3:
+      case 3:
         b = w.boundaries.get(1);
         w.boundaries.remove(1);
         box2d.destroyBody(b.b);
-        w.boundaries.add(1, new Boundary(b.x - 1, b.y, b.w, b.h));
+        w.boundaries.add(1, new Boundary(b.x - 1, b.y, b.w, b.h, 1));
         break;
       case 4:
         b = w.boundaries.get(1);
         w.boundaries.remove(1);
         box2d.destroyBody(b.b);
-        w.boundaries.add(1, new Boundary(b.x, b.y, b.w - 1, b.h));
+        w.boundaries.add(1, new Boundary(b.x, b.y, b.w - 1, b.h, 1));
         break;
       case 5:
         b = w.boundaries.get(2);
         w.boundaries.remove(2);
         box2d.destroyBody(b.b);
-        w.boundaries.add(2, new Boundary(b.x - 1, b.y, b.w, b.h));
+        w.boundaries.add(2, new Boundary(b.x - 1, b.y, b.w, b.h, 2));
         break;
       case 6:
         b = w.boundaries.get(2);
         w.boundaries.remove(2);
         box2d.destroyBody(b.b);
-        w.boundaries.add(2, new Boundary(b.x, b.y, b.w - 1, b.h));
+        w.boundaries.add(2, new Boundary(b.x, b.y, b.w - 1, b.h, 2));
         break;
       }
       break;
     case RIGHT:
       switch (resizeMode) {
-        case 1:
-          b = w.boundaries.get(0);
-          w.boundaries.remove(0);
-          box2d.destroyBody(b.b);  
-          w.boundaries.add(0, new Boundary(b.x + 1, b.y, b.w, b.h));
-          break;
-        case 2:
-          b = w.boundaries.get(0);
-          w.boundaries.remove(0);
-          box2d.destroyBody(b.b);
-          w.boundaries.add(0, new Boundary(b.x, b.y, b.w + 1, b.h));
-          break;
-        case 3:
-          b = w.boundaries.get(1);
-          w.boundaries.remove(1);
-          box2d.destroyBody(b.b);  
-          w.boundaries.add(1, new Boundary(b.x + 1, b.y, b.w, b.h));
-          break;
-        case 4:
-          b = w.boundaries.get(1);
-          w.boundaries.remove(1);
-          box2d.destroyBody(b.b);
-          w.boundaries.add(1, new Boundary(b.x, b.y, b.w + 1, b.h));
-          break;
-        case 5:
-          b = w.boundaries.get(2);
-          w.boundaries.remove(2);
-          box2d.destroyBody(b.b);  
-          w.boundaries.add(2, new Boundary(b.x + 1, b.y, b.w, b.h));
-          break;
-        case 6:
-          b = w.boundaries.get(2);
-          w.boundaries.remove(2);
-          box2d.destroyBody(b.b);
-          w.boundaries.add(2, new Boundary(b.x, b.y, b.w + 1, b.h));
-          break;
-      }
-      break;
-    case UP:
-      switch (resizeMode) {
-        case 1:
-          b = w.boundaries.get(0);
-          w.boundaries.remove(0);
-          box2d.destroyBody(b.b);  
-          w.boundaries.add(0, new Boundary(b.x, b.y + 1, b.w, b.h));
-          break;
-        case 2:
-          b = w.boundaries.get(0);
-          w.boundaries.remove(0);
-          box2d.destroyBody(b.b);
-          w.boundaries.add(0, new Boundary(b.x, b.y, b.w, b.h + 1));
-          break;
-        case 3:
-          b = w.boundaries.get(1);
-          w.boundaries.remove(1);
-          box2d.destroyBody(b.b);  
-          w.boundaries.add(1, new Boundary(b.x, b.y + 1, b.w, b.h));
-          break;
-        case 4:
-          b = w.boundaries.get(1);
-          w.boundaries.remove(1);
-          box2d.destroyBody(b.b);
-          w.boundaries.add(1, new Boundary(b.x, b.y, b.w, b.h + 1));
-          break;
-        case 5:
-          b = w.boundaries.get(2);
-          w.boundaries.remove(2);
-          box2d.destroyBody(b.b);  
-          w.boundaries.add(2, new Boundary(b.x, b.y + 1, b.w, b.h));
-          break;
-        case 6:
-          b = w.boundaries.get(2);
-          w.boundaries.remove(2);
-          box2d.destroyBody(b.b);
-          w.boundaries.add(2, new Boundary(b.x, b.y, b.w, b.h + 1));
-          break;
-      }
-      break;
-   case DOWN:
-      switch (resizeMode) {
       case 1:
         b = w.boundaries.get(0);
         w.boundaries.remove(0);
         box2d.destroyBody(b.b);  
-        w.boundaries.add(0, new Boundary(b.x, b.y - 1, b.w, b.h));
+        w.boundaries.add(0, new Boundary(b.x + 1, b.y, b.w, b.h, 0));
         break;
       case 2:
         b = w.boundaries.get(0);
         w.boundaries.remove(0);
         box2d.destroyBody(b.b);
-        w.boundaries.add(0, new Boundary(b.x, b.y, b.w, b.h - 1));
+        w.boundaries.add(0, new Boundary(b.x, b.y, b.w + 1, b.h, 0));
         break;
       case 3:
         b = w.boundaries.get(1);
         w.boundaries.remove(1);
         box2d.destroyBody(b.b);  
-        w.boundaries.add(1, new Boundary(b.x, b.y - 1, b.w, b.h));
+        w.boundaries.add(1, new Boundary(b.x + 1, b.y, b.w, b.h, 1));
         break;
       case 4:
         b = w.boundaries.get(1);
         w.boundaries.remove(1);
         box2d.destroyBody(b.b);
-        w.boundaries.add(1, new Boundary(b.x, b.y, b.w, b.h - 1));
+        w.boundaries.add(1, new Boundary(b.x, b.y, b.w + 1, b.h, 1));
         break;
       case 5:
         b = w.boundaries.get(2);
         w.boundaries.remove(2);
         box2d.destroyBody(b.b);  
-        w.boundaries.add(2, new Boundary(b.x, b.y - 1, b.w, b.h));
+        w.boundaries.add(2, new Boundary(b.x + 1, b.y, b.w, b.h, 2));
         break;
       case 6:
         b = w.boundaries.get(2);
         w.boundaries.remove(2);
         box2d.destroyBody(b.b);
-        w.boundaries.add(2, new Boundary(b.x, b.y, b.w, b.h - 1));
+        w.boundaries.add(2, new Boundary(b.x, b.y, b.w + 1, b.h, 2));
         break;
       }
       break;
-  } 
+    case UP:
+      switch (resizeMode) {
+      case 1:
+        b = w.boundaries.get(0);
+        w.boundaries.remove(0);
+        box2d.destroyBody(b.b);  
+        w.boundaries.add(0, new Boundary(b.x, b.y + 1, b.w, b.h, 0));
+        break;
+      case 2:
+        b = w.boundaries.get(0);
+        w.boundaries.remove(0);
+        box2d.destroyBody(b.b);
+        w.boundaries.add(0, new Boundary(b.x, b.y, b.w, b.h + 1, 0));
+        break;
+      case 3:
+        b = w.boundaries.get(1);
+        w.boundaries.remove(1);
+        box2d.destroyBody(b.b);  
+        w.boundaries.add(1, new Boundary(b.x, b.y + 1, b.w, b.h, 1));
+        break;
+      case 4:
+        b = w.boundaries.get(1);
+        w.boundaries.remove(1);
+        box2d.destroyBody(b.b);
+        w.boundaries.add(1, new Boundary(b.x, b.y, b.w, b.h + 1, 1));
+        break;
+      case 5:
+        b = w.boundaries.get(2);
+        w.boundaries.remove(2);
+        box2d.destroyBody(b.b);  
+        w.boundaries.add(2, new Boundary(b.x, b.y + 1, b.w, b.h, 2));
+        break;
+      case 6:
+        b = w.boundaries.get(2);
+        w.boundaries.remove(2);
+        box2d.destroyBody(b.b);
+        w.boundaries.add(2, new Boundary(b.x, b.y, b.w, b.h + 1, 2));
+        break;
+      }
+      break;
+    case DOWN:
+      switch (resizeMode) {
+      case 1:
+        b = w.boundaries.get(0);
+        w.boundaries.remove(0);
+        box2d.destroyBody(b.b);  
+        w.boundaries.add(0, new Boundary(b.x, b.y - 1, b.w, b.h, 0));
+        break;
+      case 2:
+        b = w.boundaries.get(0);
+        w.boundaries.remove(0);
+        box2d.destroyBody(b.b);
+        w.boundaries.add(0, new Boundary(b.x, b.y, b.w, b.h - 1, 0));
+        break;
+      case 3:
+        b = w.boundaries.get(1);
+        w.boundaries.remove(1);
+        box2d.destroyBody(b.b);  
+        w.boundaries.add(1, new Boundary(b.x, b.y - 1, b.w, b.h, 1));
+        break;
+      case 4:
+        b = w.boundaries.get(1);
+        w.boundaries.remove(1);
+        box2d.destroyBody(b.b);
+        w.boundaries.add(1, new Boundary(b.x, b.y, b.w, b.h - 1, 1));
+        break;
+      case 5:
+        b = w.boundaries.get(2);
+        w.boundaries.remove(2);
+        box2d.destroyBody(b.b);  
+        w.boundaries.add(2, new Boundary(b.x, b.y - 1, b.w, b.h, 1));
+        break;
+      case 6:
+        b = w.boundaries.get(2);
+        w.boundaries.remove(2);
+        box2d.destroyBody(b.b);
+        w.boundaries.add(2, new Boundary(b.x, b.y, b.w, b.h - 1, 2));
+        break;
+      }
+      break;
+    }
   }
   else {
 
@@ -422,8 +437,8 @@ void keyPressed() {
         resizeMode = 5;
       }
       break;
-      case 'Z':
-       writeObjectCoords(w);
+    case 'Z':
+      writeObjectCoords(w);
       break;
     }
   }
@@ -439,31 +454,31 @@ void oscEvent(OscMessage theOscMessage) {
   if (foo.equals("/android/twitter")) {
 
     String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
-    createSentence(frase);
+    createSentence(frase,false);
     println("Server twitter received: "+theOscMessage.get(0).stringValue());
   }
   else if (foo.equals("/android/sms")) {
 
     String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
-    createSentence(frase);
+    createSentence(frase,false);
     println("Server sms received: "+theOscMessage.get(0).stringValue());
   }
   else if (foo.equals("/android/hp")) {
 
     String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
-    createSentence(frase);
+    createSentence(frase,false);
     println("Server hp received: "+theOscMessage.get(0).stringValue());
   }
   else if (foo.equals("/android/debug")) {
 
     String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
-    createSentence(frase);
+    createSentence(frase,true);
     println("Server received: "+theOscMessage.get(0).stringValue());
   }
 }
 
-void createSentence(String frase) {
-  writeFrase2CSV(frase);
+void createSentence(String frase,boolean debug) {
+  if(!debug) writeFrase2CSV(frase);
   w.sc.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), 10, true));
 }
 
