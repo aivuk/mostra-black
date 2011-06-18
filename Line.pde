@@ -5,7 +5,7 @@ class Line {
   float w;
   ArrayList<Boundary> boundaries;
  
- void Line(float x_min, float y_min, float x_max, float y_max, float w, ArrayList<Boundary> boundaries) {
+ Line(float x_min, float y_min, float x_max, float y_max, float w, ArrayList<Boundary> boundaries) {
    this.x_min = x_min;
    this.x_max = x_max;
    this.y_min = y_min;
@@ -15,8 +15,9 @@ class Line {
  }
   
  void display() {
-   strokeWeight(w);
-   line(x_min, y_min, x_max, y_max); 
+   glg1.strokeWeight(w);
+   glg1.stroke(255);
+   glg1.line(x_min, y_min, x_max, y_max); 
  }
   
 }

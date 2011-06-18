@@ -123,7 +123,8 @@ void setup() {
   minim = new Minim(this); //inicia sáida de som
   ambientSound =minim.loadFile("data/ambient2.mp3", 2048);
   sequenceLSound =minim.loadSample("data/sequence.wav", 2048);
-  ambientSound.play(0);
+  ambientSound.play();
+  ambientSound.loop();
 
 
   // size(730*E, 335*E, OPENGL);
@@ -479,7 +480,7 @@ void oscEvent(OscMessage theOscMessage) {
 
 void createSentence(String frase,boolean debug) {
   if(!debug) writeFrase2CSV(frase);
-  w.sc.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), 10, true));
+  w.sc.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), 28, true));
 }
 
 void stop()

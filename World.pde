@@ -5,14 +5,21 @@ class World {
   Sentence actualSentence;
   ArrayList<Boundary> boundaries;
   ArrayList<Line> lines;
+  float startTime;
+  float changeGDelay;
   SentenceCreator sc;
   MouseJoint mj;
+  Vec2 g;
   int i;
   World() {
 //    this.sentences = new HashMap<String, Sentence>();
     //this.sentence = new ArrayList<Sentence>();
     this.words = new HashMap<String, Word>();
+    this.lines = new ArrayList<Line>();
     i = 0;
+    this.startTime = millis();
+    this.changeGDelay = 15000;
+    this.g = new Vec2(0,0);
   }
 
   // Adiciona um conjunto de palavras a este mundo
@@ -37,6 +44,13 @@ class World {
   void update() {
     box2d.step();
     sc.update();
+    if (millis() - this.startTime > this.changeGDelay) {
+      this.startTime = millis();    
+      this.g.x = random(-1,1);
+      this.g.y = random(-1,1);
+      box2d.setGravity(this.g.x, this.g.y);
+
+    } 
   }  
 
   void display() {
@@ -124,8 +138,31 @@ class World {
     // Cria fonte das frase
     sc = new SentenceCreator(this, -25, 25, 8, 13, width/2 - 40, width/2 + 40, height/2, height/2, 20);
     Boundary b = this.boundaries.get(1);
-    Line l = new Line(b.x - b.w/2, b.y - b.h/2, b.x + b.w/2, b.y + b.h/2, 20., this.boundaries);
-    this.lines.add(l);
+   // Line l = new Line(b.x, b.y - 10, b.x + b.w, b.y - 10, 20.0, this.boundaries);
+    // topo
+    Line l2 = new Line(15, 10, width-15, 10, 10.0, this.boundaries);
+    // esquerda
+    Line l3 = new Line(33, 10, 33, height, 6.0, this.boundaries);
+    // direita
+    Line l4 = new Line(width-50, 10, width-50, height, 6.0, this.boundaries);
+    // embaixo esquerda
+    Line l5 = new Line(33, height, 380, height, 6.0, this.boundaries);
+    // embaixo direita
+    Line l6 = new Line(width - 375, height, width-50, height, 6.0, this.boundaries);
+    // centro esquerda
+    Line l7 = new Line(660, height, 950, height, 6.0, this.boundaries);
+    // centro direita
+    Line l8 = new Line(1095, height, 1385, height, 6.0, this.boundaries);
+
+    //this.lines.add(l);
+    this.lines.add(l2);
+    this.lines.add(l3);
+    this.lines.add(l4);
+    this.lines.add(l5);
+    this.lines.add(l6);
+    this.lines.add(l7);
+    this.lines.add(l8);
+
     sc.importWordsFromCsv();
     sc.startAnimation();
   }
