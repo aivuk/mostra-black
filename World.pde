@@ -46,8 +46,8 @@ class World {
     sc.update();
     if (millis() - this.startTime > this.changeGDelay) {
       this.startTime = millis();    
-      this.g.x = random(-1,1);
-      this.g.y = random(-1,1);
+      this.g.x = random(-5,5);
+      this.g.y = random(-5,5);
       box2d.setGravity(this.g.x, this.g.y);
 
     } 
@@ -105,36 +105,7 @@ class World {
   void create() {
 
     loadObjectsCoords(this);
-    /*
-    boundaries = new ArrayList<Boundary>();
-    // boundaries.add(new Boundary(150*E+80*E/2, 260*E-80*E/2, 80*E, 260*E)); 
-    //boundaries.add(new Boundary(490*E+80*E/2, 260*E-80*E/2, 80*E, 260*E));
-    //(x2 - x1) , y2-y1
-
-    boundaries.add(new Boundary(346, 140, (600-20)/2, (716-90))); 
     
-    boundaries.add(new Boundary(838+(600-200)/4, 534, (600-200)/2, (716-410))); 
-    
-    boundaries.add(new Boundary(1332, 143, (600-70)/2, (716-90))); 
-
-    //    boundaries.add(new Boundary(351, 721, 495, 721));
-
-    //604,143
-    //351,721
-    //495,721
-
-    //1340 154
-    //1597 164
-    //1335 751
-    //1569 748
-
-    boundaries.add(new Boundary(0, 0, 1, height));
-    boundaries.add(new Boundary(0, 0, width, 1));
-    boundaries.add(new Boundary(width-1, 0, 1, height));
-    boundaries.add(new Boundary(0, height-1, width, 1));*/
-
-   // boundaries.add(new Boundary(width/2,height-700, 10, 700));
-
     // Cria fonte das frase
     sc = new SentenceCreator(this, -25, 25, 8, 13, width/2 - 40, width/2 + 40, height/2, height/2, 20);
     Boundary b = this.boundaries.get(1);

@@ -116,7 +116,7 @@ class SentenceCreator {
   void addWords(Sentence s) {
 
     for (String w:this.cleanSentence(s.sentence)) {
-      Word word = new Word(w, new Vec2(s.pos.x, s.pos.y - 100), new Vec2(random(vec_x_min, vec_x_max), random(vec_y_min, vec_y_max)), s.fsize);
+      Word word = new Word(w, new Vec2(s.pos.x, s.pos.y - 100), new Vec2(random(vec_x_min, vec_x_max), random(vec_y_min, vec_y_max)), s.fsize-5);
       this.world.addWord(word);
     }
   }

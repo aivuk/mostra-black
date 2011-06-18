@@ -60,7 +60,7 @@ class Word {
     this.w = glg1.textWidth(this.s);    
     this.pos = box2d.getBodyPixelCoord(this.body);
     box2d.destroyBody(this.body);
-    makeBody(this.pos, w, h); 
+    makeBody(this.pos, this.w, this.h); 
   }
 
   // Is the particle ready for deletion?
@@ -100,7 +100,7 @@ class Word {
 
     // Define a polygon (this is what we use for a rectangle)
     PolygonDef sd = new PolygonDef();
-    float box2dW = box2d.scalarPixelsToWorld(w_);
+    float box2dW = box2d.scalarPixelsToWorld(w_/2);
     float box2dH = box2d.scalarPixelsToWorld(h_/2);
     sd.setAsBox(box2dW, box2dH);
 

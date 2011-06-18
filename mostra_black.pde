@@ -490,7 +490,7 @@ void oscEvent(OscMessage theOscMessage) {
 
 void createSentence(String frase, boolean debug) {
   if (!debug) writeFrase2CSV(frase);
-  w.sc.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), 28, true));
+  w.sc.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), 20, true));
 }
 
 void stop()
