@@ -53,10 +53,12 @@ class SentenceCreator {
 
   ArrayList<String> cleanSentence(String sentence) {
     ArrayList<String> cleanWords = new ArrayList();
-
+    
     for (String word:sentence.split(" ")) {
+      
       if (!this.badwords.contains(word.toLowerCase()) && word.length() > 2) {
-        cleanWords.add(word);
+        String ww = word.replaceAll("[^\\pL]","");
+        if(!ww.isEmpty()) cleanWords.add(ww);
       }
     }
 

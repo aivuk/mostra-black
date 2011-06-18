@@ -32,8 +32,8 @@ class Sentence {
     switch (this.state) {
 
     case 0:
-      if (this.pos.y >= 250) {
-
+      if (this.pos.y >= height/2) {
+       /*desligando random X
         if (floor(this.toRandX) == 0) {
           boolean r = random(1) < 0.5;
 
@@ -53,7 +53,7 @@ class Sentence {
             this.pos.x -= 1;
             this.toRandX += 1;
           }
-        }
+        }*/
 
         this.pos.y -= 3;
         this.sizeFactor += 0.003;

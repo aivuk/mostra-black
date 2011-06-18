@@ -33,7 +33,7 @@ boolean blueLine = false;
 PBox2D box2d;
 GLGraphicsOffScreen glg1;
 
-GLTexture porta1,porta2,bg;
+GLTexture porta1, porta2, bg;
 
 
 CornerPinSurface surface, surface2;
@@ -51,7 +51,7 @@ boolean messageEvent;
 String outputFile = "FrasesLista.csv"; //csv
 
 int resizeMode = 0;
-
+long bgTime;
 void writeObjectCoords(World w) {
 
   //stream com ecoding UTF-8
@@ -113,7 +113,7 @@ void loadObjectsCoords(World w) {
     e.printStackTrace();
   }
 }
-
+float fade;
 void setup() {
 
 
@@ -168,13 +168,19 @@ void setup() {
   w = new World(); 
   w.create();
   glg1.endDraw();
+  bgTime = millis();
+  fade = 0;
 }
 
 void draw() {
   background(0);
   glg1.beginDraw();
 
-  glg1.image(bg,0,0);
+
+
+  glg1.image(bg, 0, 0);
+
+
   w.update();
   w.display();
 
@@ -457,33 +463,33 @@ void oscEvent(OscMessage theOscMessage) {
   messageEvent = true;
   String foo = theOscMessage.addrPattern();
   if (foo.equals("/android/twitter")) {
-    
+
     String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
-    createSentence(frase,false);
+    createSentence(frase, false);
     println("Server twitter received: "+theOscMessage.get(0).stringValue());
   }
   else if (foo.equals("/android/sms")) {
 
     String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
-    createSentence(frase,false);
+    createSentence(frase, false);
     println("Server sms received: "+theOscMessage.get(0).stringValue());
   }
   else if (foo.equals("/android/hp")) {
 
     String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
-    createSentence(frase,false);
+    createSentence(frase, false);
     println("Server hp received: "+theOscMessage.get(0).stringValue());
   }
   else if (foo.equals("/android/debug")) {
 
     String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
-    createSentence(frase,true);
+    createSentence(frase, true);
     println("Server received: "+theOscMessage.get(0).stringValue());
   }
 }
 
-void createSentence(String frase,boolean debug) {
-  if(!debug) writeFrase2CSV(frase);
+void createSentence(String frase, boolean debug) {
+  if (!debug) writeFrase2CSV(frase);
   w.sc.sentencesToAdd.push(new Sentence(frase, new Vec2(width/2, height/2 + 200), new Vec2(0, 0), 28, true));
 }
 

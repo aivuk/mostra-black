@@ -43,7 +43,7 @@ class Word {
     h = fsize;
     
     // Add the box to the box2d world
-    colorf = int(random(128,255));
+    colorf = color(random(200,255),30,random(130,255));
     //makeBody(pos, w, h);
     //this.body.putToSleep(); 
   }

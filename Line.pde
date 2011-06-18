@@ -22,25 +22,30 @@ class Line {
       if (lstartTime == 0) {
         lstartTime = millis();
       }
-      
+
       if (millis() - lstartTime <= 1000) {
-        if (!blueLine && frameCount   %10 == 0) {
+        if (!blueLine && frameCount %10 == 0) {
           blueLine = true;
-        glg1.stroke(220, 180, 0);
-        } else {
+          // glg1.stroke(220, 180, 0);
+          glg1.stroke(250, 20, 0);
+        } 
+        else {
           blueLine = false;
-        glg1.stroke(0, 170, 255);         
+          glg1.stroke(0, 170, 255);
+      //    glg1.stroke(255, 0, 120);
         }
         glg1.line(x_min, y_min, x_max, y_max);
-       
-      } else {
-         messageEvent = false;
-         lstartTime = 0;
+      } 
+      else {
+        messageEvent = false;
+        lstartTime = 0;
         blueLine = false;
       }
     }
     else {
-      glg1.stroke(0, 170, 255);
+       glg1.stroke(0, 170, 255);
+
+      //glg1.stroke(255, 0, 120);
       glg1.line(x_min, y_min, x_max, y_max);
     }
   }
