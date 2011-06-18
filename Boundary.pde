@@ -46,25 +46,24 @@ class Boundary {
   void display() {
     glg1.fill(0);
     glg1.stroke(0);
-     if (t==0 || t == 2) {
+    if (t==0 || t == 2) {
 
-     glg1.imageMode(CORNER);
-     if (millis() - startTime >= 1000) {
-     startTime = millis();
-     glg1.tint(50, 50, 50);
-     glg1.image(porta1, x - w/3 - 24, y - h/3 + 68);
-    glg1.tint(255);
-     } else {
-         glg1.tint(0);
-     glg1.image(porta1, x - w/3 - 24, y - h/3 + 68);
-    glg1.tint(255);
-       
-     }
-    
+      glg1.imageMode(CORNER);
+      if (millis() - startTime >= 1000) {
+        startTime = millis();
+        glg1.tint(50, 50, 50);
+        glg1.image(porta1, x - w/3 - 24, y - h/3 + 68);
+        glg1.tint(255);
+      } 
+      else {
+        glg1.tint(0);
+        glg1.image(porta1, x - w/3 - 24, y - h/3 + 68);
+        glg1.tint(255);
+      }
     } 
     else {
-    glg1.rectMode(CORNER);
-    glg1.rect(x, y, w, h);
+      glg1.rectMode(CORNER);
+      glg1.rect(x, y, w, h);
     }
   }
 }

@@ -67,6 +67,8 @@ class Sentence {
         long n = millis();
         if (n - this.startTime >= 5000) {
            this.state = 2; 
+                 messageEvent = true;
+
         }
     }
   }

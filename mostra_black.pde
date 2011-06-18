@@ -28,7 +28,8 @@ float g_x = 0;
 float g_y = -1.0;
 color bck_color = color(255, 4, 3);
 int E=2;
-
+long lstartTime = 0;
+boolean blueLine = false;
 PBox2D box2d;
 GLGraphicsOffScreen glg1;
 
@@ -46,7 +47,7 @@ static final int OSCPORT = 7777;
 OscP5 receiveOSC;
 NetAddress remoteAddress;
 
-
+boolean messageEvent;
 String outputFile = "FrasesLista.csv"; //csv
 
 int resizeMode = 0;
@@ -126,6 +127,8 @@ void setup() {
   ambientSound.play();
   ambientSound.loop();
 
+
+  messageEvent = false;
 
   // size(730*E, 335*E, OPENGL);
   // size(screen.width, screen.height, GLConstants.GLGRAPHICS);
@@ -451,9 +454,10 @@ void keyPressed() {
 void oscEvent(OscMessage theOscMessage) {
   // print the message for now
   Locale ptLocale = new Locale("pt", "BR");
+  messageEvent = true;
   String foo = theOscMessage.addrPattern();
   if (foo.equals("/android/twitter")) {
-
+    
     String frase = theOscMessage.get(0).stringValue().toUpperCase(ptLocale);
     createSentence(frase,false);
     println("Server twitter received: "+theOscMessage.get(0).stringValue());

@@ -30,36 +30,36 @@ class SentenceCreator {
   } 
 
   void loadBadWords() {
-      try {
+    try {
 
       CsvReader badwordsFile = new CsvReader(new InputStreamReader(new FileInputStream(dataPath("") + "badwords.csv"), "UTF-8"));
       badwordsFile.readHeaders();
-      
-      while (badwordsFile.readRecord()) {
+
+      while (badwordsFile.readRecord ()) {
         String badword = badwordsFile.get("badword");
-        this.badwords.add(badword); 
+        this.badwords.add(badword);
       }
       badwordsFile.close();
     }
-    
+
     catch (FileNotFoundException e) {
       e.printStackTrace();
     }
-    
+
     catch (IOException e) {
       e.printStackTrace();
-    }  
+    }
   }
 
   ArrayList<String> cleanSentence(String sentence) {
     ArrayList<String> cleanWords = new ArrayList();
 
     for (String word:sentence.split(" ")) {
-       if (!this.badwords.contains(word.toLowerCase()) && word.length() > 2) {
-         cleanWords.add(word);
-       }     
-     }
-     
+      if (!this.badwords.contains(word.toLowerCase()) && word.length() > 2) {
+        cleanWords.add(word);
+      }
+    }
+
     return cleanWords;
   }
 
@@ -90,7 +90,7 @@ class SentenceCreator {
 
       CsvReader frasesFile = new CsvReader(new InputStreamReader(new FileInputStream(dataPath(outputFile)), "UTF-8"));
       frasesFile.readHeaders();
-      
+
       while (frasesFile.readRecord ()) {
         String frase = frasesFile.get("Frase");
         frase = frase.toUpperCase();
@@ -112,24 +112,26 @@ class SentenceCreator {
   }
 
   void addWords(Sentence s) {
-   
-       for (String w:this.cleanSentence(s.sentence)) {
-         Word word = new Word(w, new Vec2(s.pos.x, s.pos.y - 100), new Vec2(random(vec_x_min, vec_x_max), random(vec_y_min, vec_y_max)), s.fsize);
-         this.world.addWord(word);
-       }
+
+    for (String w:this.cleanSentence(s.sentence)) {
+      Word word = new Word(w, new Vec2(s.pos.x, s.pos.y - 100), new Vec2(random(vec_x_min, vec_x_max), random(vec_y_min, vec_y_max)), s.fsize);
+      this.world.addWord(word);
+    }
   }
 
   void update() {
-    
+
     if (this.world.actualSentence != null) {
       Sentence s = this.world.actualSentence;
       s.update();
       if (s.state == 2) {
-          this.addWords(s);
-          this.world.actualSentence = null;  
+        this.addWords(s);
+        this.world.actualSentence = null;
       }
-    } else if (!this.sentencesToAdd.empty()) {
+    } 
+    else if (!this.sentencesToAdd.empty()) {
       sequenceLSound.trigger();
+
       Sentence s = this.sentencesToAdd.pop();
       this.world.actualSentence = s;
     }
