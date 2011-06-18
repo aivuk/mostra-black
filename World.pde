@@ -85,6 +85,8 @@ class World {
 
   void create() {
 
+    loadObjectsCoords(this);
+    /*
     boundaries = new ArrayList<Boundary>();
     // boundaries.add(new Boundary(150*E+80*E/2, 260*E-80*E/2, 80*E, 260*E)); 
     //boundaries.add(new Boundary(490*E+80*E/2, 260*E-80*E/2, 80*E, 260*E));
@@ -110,7 +112,7 @@ class World {
     boundaries.add(new Boundary(0, 0, 1, height));
     boundaries.add(new Boundary(0, 0, width, 1));
     boundaries.add(new Boundary(width-1, 0, 1, height));
-    boundaries.add(new Boundary(0, height-1, width, 1));
+    boundaries.add(new Boundary(0, height-1, width, 1));*/
 
    // boundaries.add(new Boundary(width/2,height-700, 10, 700));
 
