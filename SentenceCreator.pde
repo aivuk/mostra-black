@@ -133,8 +133,9 @@ class SentenceCreator {
     } 
     else if (!this.sentencesToAdd.empty()) {
       sequenceLSound.trigger();
-
       Sentence s = this.sentencesToAdd.pop();
+      //sendMail(s.sentence);
+
       this.world.actualSentence = s;
     }
   }
