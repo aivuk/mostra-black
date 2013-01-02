@@ -32,7 +32,7 @@ class Line {
         else {
           blueLine = false;
          // glg1.stroke(0, 170, 255);
-            glg1.stroke(255, 0, 120);
+         glg1.stroke(255, 0, 120);
         }
         glg1.line(x_min, y_min, x_max, y_max);
       } 
@@ -43,7 +43,7 @@ class Line {
       }
     }
     else {
-       //glg1.stroke(0, 170, 255);
+      // glg1.stroke(0, 170, 255);
 
       glg1.stroke(255, 0, 120);
       glg1.line(x_min, y_min, x_max, y_max);
